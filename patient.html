@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TSVP Patient Profile — Enter clinical parameters and vital signs for advanced cardiovascular risk prediction and vascular AI modeling.">
+    <title>TSVP — Patient Profile | Cardiovascular Risk Analysis</title>
+    <meta name="api-base-url" content="">
+
+    <!-- Google Fonts: Orbitron & Rajdhani -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets: Core Design System + Patient Profile Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="patient.css">
+</head>
+<body class="patient-body">
+
+    <!-- Interactive Particle Background -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- Sci-Fi Visual Layers -->
+    <div class="cyber-grid" aria-hidden="true"></div>
+    <div class="ambient-glow" aria-hidden="true"></div>
+    <div class="vignette-overlay" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- Corner Sci-Fi Telemetry Metadata -->
+    <div class="hud-corner hud-top-left" aria-hidden="true">
+        <span class="hud-code">SYS.AI // PATIENT PROFILE</span>
+        <span class="hud-status"><span class="status-dot"></span>TELEMETRY ENGINE READY</span>
+    </div>
+    <div class="hud-corner hud-top-right" aria-hidden="true">
+        <span class="hud-code">MODULE: RISK PREDICTOR</span>
+        <span class="hud-status">ENCRYPTION: 256-BIT BIO-TLS</span>
+    </div>
+    <div class="hud-corner hud-bottom-left" aria-hidden="true">
+        <span class="hud-code">PROTOCOL: TSVP-CLINICAL-V2</span>
+        <span class="hud-status">STANDARDS: ACC/AHA COMPLIANT</span>
+    </div>
+    <div class="hud-corner hud-bottom-right" aria-hidden="true">
+        <span class="hud-code">LOCAL STAGING</span>
+        <span class="hud-status">MEMORY-SECURE BUFFER</span>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="patient-page-container">
+
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav-bar">
+            <a href="index.html" class="nav-brand-link" title="Return to TSVP Landing Page">
+                <span class="brand-badge-core">TSVP</span>
+                <span class="brand-divider">/</span>
+                <span class="brand-module">VASCULAR AI</span>
+            </a>
+            <div class="nav-status-pill">
+                <span class="pulse-indicator"></span>
+                <span class="pill-text">CLINICAL INTAKE MODE</span>
+            </div>
+        </nav>
+
+        <!-- 2. Page Heading Section -->
+        <header class="patient-header">
+            <div class="heading-title-group">
+                <!-- Glowing Cyan Medical Pulse Icon / ECG Line -->
+                <div class="pulse-icon-box" aria-hidden="true">
+                    <svg class="heading-ecg-svg" viewBox="0 0 44 24" fill="none">
+                        <path d="M1 12h8l4-9 6 18 5-13 4 7 3-3h12" stroke="#00f3ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1 class="patient-main-heading">PATIENT PROFILE</h1>
+                <div class="pulse-icon-box" aria-hidden="true">
+                    <svg class="heading-ecg-svg" viewBox="0 0 44 24" fill="none">
+                        <path d="M1 12h8l4-9 6 18 5-13 4 7 3-3h12" stroke="#00f3ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="patient-sub-heading">ENTER YOUR DETAILS FOR CARDIOVASCULAR RISK ANALYSIS</p>
+        </header>
+
+        <!-- 3. Patient Information Form Panel -->
+        <section class="form-wrapper">
+            <form id="patientProfileForm" novalidate>
+
+                <!-- Futuristic Glass Panel -->
+                <div class="glass-form-panel">
+                    <!-- Futuristic Decorative Corner Brackets -->
+                    <span class="corner-bracket top-left" aria-hidden="true"></span>
+                    <span class="corner-bracket top-right" aria-hidden="true"></span>
+                    <span class="corner-bracket bottom-left" aria-hidden="true"></span>
+                    <span class="corner-bracket bottom-right" aria-hidden="true"></span>
+
+                    <!-- =======================================================
+                         A. BASIC INFORMATION
+                         ======================================================= -->
+                    <div class="form-section">
+                        <div class="section-badge">
+                            <span class="badge-index">A</span>
+                            <h2 class="badge-title">BASIC INFORMATION</h2>
+                            <div class="section-decor-line" aria-hidden="true"></div>
+                        </div>
+
+                        <div class="form-grid-2col">
+                            <!-- 1. Age -->
+                            <div class="input-group" id="group-age">
+                                <label for="patientAge" class="input-label">
+                                    Age <span class="req-star">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <input 
+                                        type="number" 
+                                        id="patientAge" 
+                                        name="age" 
+                                        min="18" 
+                                        max="120" 
+                                        placeholder="e.g. 52" 
+                                        required 
+                                        autocomplete="off"
+                                    >
+                                    <span class="unit-badge">YRS</span>
+                                </div>
+                                <span class="validation-message" id="error-age" role="alert"></span>
+                            </div>
+
+                            <!-- 2. Sex -->
+                            <div class="input-group" id="group-sex">
+                                <label for="patientSex" class="input-label">
+                                    Sex <span class="req-star">*</span>
+                                </label>
+                                <div class="input-wrapper select-wrapper">
+                                    <select id="patientSex" name="sex" required>
+                                        <option value="" disabled selected>Select biological sex</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Prefer not to say">Prefer not to say</option>
+                                    </select>
+                                    <svg class="select-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                                <span class="validation-message" id="error-sex" role="alert"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- =======================================================
+                         B. VITAL SIGNS
+                         ======================================================= -->
+                    <div class="form-section">
+                        <div class="section-badge">
+                            <span class="badge-index">B</span>
+                            <h2 class="badge-title">VITAL SIGNS</h2>
+                            <div class="section-decor-line" aria-hidden="true"></div>
+                        </div>
+
+                        <div class="form-grid-2col">
+                            <!-- 3. Systolic Blood Pressure -->
+                            <div class="input-group" id="group-systolic">
+                                <label for="patientSystolic" class="input-label">
+                                    Systolic Blood Pressure <span class="req-star">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <input 
+                                        type="number" 
+                                        id="patientSystolic" 
+                                        name="systolic" 
+                                        min="60" 
+                                        max="260" 
+                                        placeholder="e.g. 120" 
+                                        required 
+                                        autocomplete="off"
+                                    >
+                                    <span class="unit-badge">mmHg</span>
+                                </div>
+                                <span class="validation-message" id="error-systolic" role="alert"></span>
+                            </div>
+
+                            <!-- 4. Diastolic Blood Pressure -->
+                            <div class="input-group" id="group-diastolic">
+                                <label for="patientDiastolic" class="input-label">
+                                    Diastolic Blood Pressure <span class="req-star">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <input 
+                                        type="number" 
+                                        id="patientDiastolic" 
+                                        name="diastolic" 
+                                        min="40" 
+                                        max="160" 
+                                        placeholder="e.g. 80" 
+                                        required 
+                                        autocomplete="off"
+                                    >
+                                    <span class="unit-badge">mmHg</span>
+                                </div>
+                                <span class="validation-message" id="error-diastolic" role="alert"></span>
+                            </div>
+
+                            <!-- 5. Cholesterol -->
+                            <div class="input-group" id="group-cholesterol">
+                                <label for="patientCholesterol" class="input-label">
+                                    Total Cholesterol <span class="req-star">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <input 
+                                        type="number" 
+                                        id="patientCholesterol" 
+                                        name="cholesterol" 
+                                        min="70" 
+                                        max="500" 
+                                        placeholder="e.g. 190" 
+                                        required 
+                                        autocomplete="off"
+                                    >
+                                    <span class="unit-badge">mg/dL</span>
+                                </div>
+                                <span class="validation-message" id="error-cholesterol" role="alert"></span>
+                            </div>
+
+                            <!-- 6. Blood Sugar -->
+                            <div class="input-group" id="group-bloodsugar">
+                                <label for="patientBloodSugar" class="input-label">
+                                    Blood Sugar (Fasting) <span class="req-star">*</span>
+                                </label>
+                                <div class="input-wrapper">
+                                    <input 
+                                        type="number" 
+                                        id="patientBloodSugar" 
+                                        name="bloodSugar" 
+                                        min="40" 
+                                        max="450" 
+                                        placeholder="e.g. 95" 
+                                        required 
+                                        autocomplete="off"
+                                    >
+                                    <span class="unit-badge">mg/dL</span>
+                                </div>
+                                <span class="validation-message" id="error-bloodsugar" role="alert"></span>
+                            </div>
+
+                            <!-- 7. BMI (Spans full or 1 col) -->
+                            <div class="input-group" id="group-bmi">
+                                <div class="label-with-tool">
+                                    <label for="patientBMI" class="input-label">
+                                        Body Mass Index (BMI) <span class="req-star">*</span>
+                                    </label>
+                                    <button type="button" class="mini-calc-trigger" id="bmiHelperToggle">
+                                        Calculate from Ht/Wt
+                                    </button>
+                                </div>
+                                <div class="input-wrapper">
+                                    <input 
+                                        type="number" 
+                                        id="patientBMI" 
+                                        name="bmi" 
+                                        min="12" 
+                                        max="70" 
+                                        step="0.1" 
+                                        placeholder="e.g. 24.5" 
+                                        required 
+                                        autocomplete="off"
+                                    >
+                                    <span class="unit-badge">kg/m²</span>
+                                </div>
+                                <span class="validation-message" id="error-bmi" role="alert"></span>
+
+                                <!-- Quick BMI Helper Popout -->
+                                <div class="bmi-helper-box" id="bmiHelperBox" hidden>
+                                    <div class="helper-fields">
+                                        <div class="helper-field">
+                                            <label for="calcHeight">Height (cm)</label>
+                                            <input type="number" id="calcHeight" placeholder="175">
+                                        </div>
+                                        <div class="helper-field">
+                                            <label for="calcWeight">Weight (kg)</label>
+                                            <input type="number" id="calcWeight" placeholder="72">
+                                        </div>
+                                        <button type="button" class="helper-apply-btn" id="btnApplyBmi">Compute</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- =======================================================
+                         C. LIFESTYLE AND MEDICAL HISTORY
+                         ======================================================= -->
+                    <div class="form-section">
+                        <div class="section-badge">
+                            <span class="badge-index">C</span>
+                            <h2 class="badge-title">LIFESTYLE AND MEDICAL HISTORY</h2>
+                            <div class="section-decor-line" aria-hidden="true"></div>
+                        </div>
+
+                        <div class="form-grid-2col">
+                            <!-- 8. Smoking Status -->
+                            <div class="input-group" id="group-smoking">
+                                <label for="patientSmoking" class="input-label">
+                                    Smoking Status <span class="req-star">*</span>
+                                </label>
+                                <div class="input-wrapper select-wrapper">
+                                    <select id="patientSmoking" name="smoking" required>
+                                        <option value="" disabled selected>Select smoking status</option>
+                                        <option value="Never">Never</option>
+                                        <option value="Former">Former</option>
+                                        <option value="Current">Current</option>
+                                    </select>
+                                    <svg class="select-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                                <span class="validation-message" id="error-smoking" role="alert"></span>
+                            </div>
+
+                            <!-- 9. Diabetes -->
+                            <div class="input-group" id="group-diabetes">
+                                <label class="input-label">
+                                    Diabetes <span class="req-star">*</span>
+                                </label>
+                                <div class="segmented-choice" role="radiogroup" aria-labelledby="group-diabetes">
+                                    <label class="choice-pill">
+                                        <input type="radio" name="diabetes" value="No" required>
+                                        <span class="pill-body">No</span>
+                                    </label>
+                                    <label class="choice-pill">
+                                        <input type="radio" name="diabetes" value="Yes" required>
+                                        <span class="pill-body">Yes</span>
+                                    </label>
+                                </div>
+                                <span class="validation-message" id="error-diabetes" role="alert"></span>
+                            </div>
+
+                            <!-- 10. Physical Activity -->
+                            <div class="input-group" id="group-activity">
+                                <label for="patientActivity" class="input-label">
+                                    Physical Activity <span class="req-star">*</span>
+                                </label>
+                                <div class="input-wrapper select-wrapper">
+                                    <select id="patientActivity" name="activity" required>
+                                        <option value="" disabled selected>Select activity level</option>
+                                        <option value="Low">Low (&lt; 60 mins/week)</option>
+                                        <option value="Moderate">Moderate (60 - 150 mins/week)</option>
+                                        <option value="High">High (&gt; 150 mins/week)</option>
+                                    </select>
+                                    <svg class="select-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                                <span class="validation-message" id="error-activity" role="alert"></span>
+                            </div>
+
+                            <!-- 11. Family History of Cardiovascular Disease -->
+                            <div class="input-group" id="group-family-history">
+                                <label class="input-label">
+                                    Family History of Cardiovascular Disease <span class="req-star">*</span>
+                                </label>
+                                <div class="segmented-choice" role="radiogroup" aria-labelledby="group-family-history">
+                                    <label class="choice-pill">
+                                        <input type="radio" name="familyHistory" value="No" required>
+                                        <span class="pill-body">No</span>
+                                    </label>
+                                    <label class="choice-pill">
+                                        <input type="radio" name="familyHistory" value="Yes" required>
+                                        <span class="pill-body">Yes</span>
+                                    </label>
+                                </div>
+                                <span class="validation-message" id="error-family-history" role="alert"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- =======================================================
+                         D. ADDITIONAL INFORMATION
+                         ======================================================= -->
+                    <div class="form-section">
+                        <div class="section-badge">
+                            <span class="badge-index">D</span>
+                            <h2 class="badge-title">ADDITIONAL INFORMATION</h2>
+                            <div class="section-decor-line" aria-hidden="true"></div>
+                        </div>
+
+                        <!-- 12. Optional Clinical Notes -->
+                        <div class="input-group full-width" id="group-notes">
+                            <label for="clinicalNotes" class="input-label">
+                                Optional Clinical Notes
+                            </label>
+                            <div class="input-wrapper textarea-wrapper">
+                                <textarea 
+                                    id="clinicalNotes" 
+                                    name="clinicalNotes" 
+                                    rows="4" 
+                                    placeholder="Enter any additional relevant clinical information..."
+                                ></textarea>
+                            </div>
+                            <span class="notes-hint">Provide any known medical conditions, medications, or surgical history if relevant.</span>
+                        </div>
+                    </div>
+
+                </div> <!-- End .glass-form-panel -->
+
+                <!-- ===========================================================
+                     7. EXTRA FEATURE AT THE BOTTOM — OPTIONAL AI ASSISTANT
+                     =========================================================== -->
+                <section class="ai-assistant-card" aria-label="Optional AI Assistant">
+                    <div class="ai-card-glow-edge" aria-hidden="true"></div>
+                    
+                    <div class="ai-card-header">
+                        <div class="ai-icon-hex" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#00f3ff" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <div class="ai-card-titles">
+                            <h3 class="ai-card-heading">HAVE OTHER SYMPTOMS OR CONCERNS?</h3>
+                            <p class="ai-card-subtitle">
+                                Have symptoms or health concerns that aren't covered by the questions above? You can ask our AI assistant for general information.
+                            </p>
+                        </div>
+                        <button type="button" class="btn-ask-ai" id="btnToggleAiAssistant" aria-expanded="false" aria-controls="aiAssistantDrawer">
+                            <span class="btn-ai-glow"></span>
+                            <span class="btn-ai-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                </svg>
+                            </span>
+                            <span class="btn-ai-text">ASK AI ABOUT OTHER SYMPTOMS</span>
+                        </button>
+                    </div>
+
+                    <!-- Expandable Compact AI Assistant Chat Panel -->
+                    <div class="ai-drawer" id="aiAssistantDrawer" hidden>
+                        <div class="ai-drawer-inner">
+
+                            <!-- Top Bar of AI Panel -->
+                            <div class="ai-drawer-topbar">
+                                <div class="ai-status-indicator">
+                                    <span class="ai-status-dot" id="aiConnectionDot"></span>
+                                    <span class="ai-status-text" id="aiConnectionText">TSVP CLINICAL AI // ONLINE</span>
+                                </div>
+                                <button type="button" class="ai-close-btn" id="btnCloseAiAssistant" aria-label="Close AI Assistant">
+                                    &times;
+                                </button>
+                            </div>
+
+                            <!-- Medical Safety Disclaimer Banner -->
+                            <div class="clinical-safety-alert" role="alert">
+                                <div class="alert-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#ff2d55" stroke-width="2">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                </div>
+                                <div class="alert-content">
+                                    <strong class="alert-title">Clinical Information &amp; Safety Notice:</strong>
+                                    <span>This assistant provides general cardiovascular health education and is not a substitute for a healthcare professional. It does not diagnose diseases or calculate risk scores. <strong>For severe chest pain, shortness of breath, or numbness, call 911 or emergency medical care immediately.</strong></span>
+                                </div>
+                            </div>
+
+                            <!-- Backend API Status Notice (Shown when OPENAI_API_KEY is not configured) -->
+                            <div class="api-status-notice" id="apiConfigNotice" hidden>
+                                <span class="notice-badge">BACKEND STATUS</span>
+                                <span class="notice-msg">OpenAI API Key is not configured in server environment. Using verified built-in clinical triage guidance. (To enable live OpenAI, set <code>OPENAI_API_KEY</code> on server).</span>
+                            </div>
+
+                            <!-- Quick Suggestion Chips -->
+                            <div class="suggestion-chips-container">
+                                <span class="chips-label">Sample Questions:</span>
+                                <div class="chips-list">
+                                    <button type="button" class="prompt-chip" data-prompt="Sometimes my heart beats unusually fast. What could this mean?">
+                                        "Sometimes my heart beats unusually fast. What could this mean?"
+                                    </button>
+                                    <button type="button" class="prompt-chip" data-prompt="I feel dizzy occasionally. Should I mention this to a healthcare professional?">
+                                        "I feel dizzy occasionally. Should I mention this to a healthcare professional?"
+                                    </button>
+                                    <button type="button" class="prompt-chip" data-prompt="I become breathless when climbing stairs. What information might be important?">
+                                        "I become breathless when climbing stairs. What information might be important?"
+                                    </button>
+                                    <button type="button" class="prompt-chip" data-prompt="What other symptoms should I discuss with my doctor?">
+                                        "What other symptoms should I discuss with my doctor?"
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Chat Messages Stream -->
+                            <div class="chat-messages-container" id="chatMessages" role="log" aria-live="polite">
+                                <div class="chat-bubble ai-bubble">
+                                    <div class="bubble-avatar" aria-hidden="true">AI</div>
+                                    <div class="bubble-body">
+                                        <p>Greetings. I am the TSVP Clinical Assistant. I can share general cardiovascular health information, discuss symptoms not captured on the standard form, or help you formulate questions for your physician.</p>
+                                        <p class="bubble-sub">How may I assist your heart health inquiry today?</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Chat Input Form -->
+                            <div class="chat-input-bar">
+                                <div id="aiChatForm" class="chat-form">
+                                    <input 
+                                        type="text" 
+                                        id="aiInputText" 
+                                        placeholder="Describe symptoms or ask a cardiovascular health question..." 
+                                        autocomplete="off" 
+                                        maxlength="500"
+                                    >
+                                    <button type="button" class="btn-send-chat" id="btnSendChat" aria-label="Send message to AI assistant">
+                                        <span>Send</span>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="22" y1="2" x2="11" y2="13"/>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="chat-privacy-note">
+                                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                    </svg>
+                                    <span>Only this query is processed. Your 12 standard medical form fields remain private and are not shared.</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ===========================================================
+                     5. BUTTONS: BACK & ANALYZE RISK
+                     =========================================================== -->
+                <!-- Server & Validation Feedback Alert Box -->
+                <div class="form-status-banner" id="formStatusBanner" hidden role="alert" aria-live="polite">
+                    <span class="status-banner-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                    </span>
+                    <span class="status-banner-content" id="formStatusMessage"></span>
+                </div>
+
+                <div class="form-actions-bar">
+                    <a href="index.html" class="btn-secondary-back" id="btnBack">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                        <span>BACK</span>
+                    </a>
+
+                    <button type="submit" class="btn-primary-analyze" id="btnAnalyzeRisk" form="patientProfileForm">
+                        <span class="btn-glow-shimmer" aria-hidden="true"></span>
+                        <span class="btn-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        </span>
+                        <span class="btn-label">ANALYZE RISK</span>
+                    </button>
+                </div>
+
+            </form>
+        </section>
+
+    </main>
+
+    <!-- =======================================================================
+         STAGED TELEMETRY CONFIRMATION MODAL (Post-Validation Preparation)
+         ======================================================================= -->
+    <div class="telemetry-modal-overlay" id="telemetryModal" hidden aria-modal="true" role="dialog">
+        <div class="telemetry-modal-box">
+            <div class="modal-glow-border" aria-hidden="true"></div>
+            
+            <div class="modal-header">
+                <div class="modal-status-pill">
+                    <span class="modal-dot"></span>
+                    <span>TELEMETRY BUFFER STAGED</span>
+                </div>
+                <h2 class="modal-title">PATIENT PROFILE VALIDATED</h2>
+                <p class="modal-subtitle">Baseline cardiovascular parameters staged for TSVP neural network analysis.</p>
+            </div>
+
+            <!-- Staged Telemetry Data Preview -->
+            <div class="telemetry-summary-grid" id="modalDataSummary">
+                <!-- Dynamically populated via JavaScript -->
+            </div>
+
+            <!-- Notice that Prediction Engine is Next Step -->
+            <div class="modal-notice-banner">
+                <div class="notice-icon-circle">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#00f3ff" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <div class="notice-text-block">
+                    <strong>Secure Local Buffer Active:</strong>
+                    <span>Your clinical data has been validated and staged in memory storage. In compliance with medical safety rules, no simulated risk score is fabricated at this intake step.</span>
+                </div>
+            </div>
+
+            <div class="modal-action-row">
+                <button type="button" class="modal-btn-dismiss" id="btnDismissModal">EDIT TELEMETRY</button>
+                <a href="index.html" class="modal-btn-core">RETURN TO CORE SYSTEM</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="patient.js"></script>
+</body>
+</html>

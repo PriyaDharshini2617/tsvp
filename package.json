@@ -1,0 +1,20 @@
+{
+  "name": "tsvp-smart-vascular-predictor",
+  "version": "1.0.0",
+  "description": "TSVP — The Smart Vascular Predictor: Futuristic Medical AI Application",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "backend": "python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload",
+    "serve:py": "python server.py"
+  },
+  "keywords": [
+    "tsvp",
+    "cardiovascular",
+    "medical-ai",
+    "vascular-predictor"
+  ],
+  "author": "TSVP Medical AI Systems",
+  "license": "ISC"
+}

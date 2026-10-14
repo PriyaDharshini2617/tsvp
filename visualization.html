@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TSVP — Interactive 3D Cardiovascular Heart Visualization Dashboard. Explore 3D anatomy, bisected internal structures, and personalized educational health factors.">
+    <title>TSVP — 3D Cardiovascular Visualization Dashboard</title>
+
+    <!-- Google Fonts: Orbitron & Rajdhani -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets: Core Design System + Visualization Styles -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="visualization.css">
+</head>
+<body class="vis-body">
+
+    <!-- Background Layers -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="cyber-grid" aria-hidden="true"></div>
+    <div class="ambient-glow" aria-hidden="true"></div>
+    <div class="vignette-overlay" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- Main Container -->
+    <div class="vis-page-container">
+
+        <!-- Top Navigation Bar -->
+        <header class="vis-top-bar">
+            <div class="nav-left">
+                <a href="index.html" class="nav-brand-link" title="Return to Core Landing Page">
+                    <span class="brand-badge-core">TSVP</span>
+                    <span class="brand-divider">/</span>
+                    <span class="brand-module">3D VASCULAR ENGINE</span>
+                </a>
+            </div>
+
+            <div class="nav-right" style="display:flex; gap:0.75rem; align-items:center;">
+                <a href="patient.html" class="btn-back-profile" id="btnBackToProfile" title="Return to Patient Profile (Page 2)">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <span>BACK TO PATIENT PROFILE</span>
+                </a>
+                <a href="body.html" class="btn-nav-plan" id="btnNavPlan" title="Proceed to Whole-Body Anatomy (Page 4)">
+                    <span>CONTINUE TO WHOLE-BODY ANATOMY</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- Page Heading & Subtitle -->
+        <section class="vis-header-section">
+            <div class="heading-title-wrapper">
+                <div class="heading-ecg-icon" aria-hidden="true">
+                    <svg viewBox="0 0 44 24" width="36" height="20" fill="none">
+                        <path d="M1 12h8l4-9 6 18 5-13 4 7 3-3h12" stroke="#00f3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1 class="vis-main-heading">TSVP — CARDIOVASCULAR VISUALIZATION</h1>
+                <div class="heading-ecg-icon" aria-hidden="true">
+                    <svg viewBox="0 0 44 24" width="36" height="20" fill="none">
+                        <path d="M1 12h8l4-9 6 18 5-13 4 7 3-3h12" stroke="#00f3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+            <p class="vis-sub-heading">EXPLORE YOUR HEART. UNDERSTAND YOUR HEALTH.</p>
+
+            <!-- Patient Telemetry Summary Bar (Reads submitted parameters) -->
+            <div class="patient-telemetry-banner" id="patientTelemetryBanner">
+                <div class="telemetry-banner-header">
+                    <span class="banner-status-dot"></span>
+                    <span class="banner-title">PATIENT TELEMETRY BUFFER</span>
+                    <span class="banner-mode" id="telemetryModeBadge">SUBMITTED DATA LOADED</span>
+                </div>
+                <div class="telemetry-pills-row" id="telemetryPillsRow">
+                    <!-- Populated dynamically via JavaScript -->
+                    <span class="telemetry-pill">Age: --</span>
+                    <span class="telemetry-pill">Sex: --</span>
+                    <span class="telemetry-pill">BP: --/-- mmHg</span>
+                    <span class="telemetry-pill">Cholesterol: -- mg/dL</span>
+                    <span class="telemetry-pill">Blood Sugar: -- mg/dL</span>
+                    <span class="telemetry-pill">BMI: -- kg/m²</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Interactive 3D Stage Section -->
+        <main class="vis-stage-layout">
+
+            <!-- Center Stage: 3D Heart Viewer & Control Deck -->
+            <div class="vis-center-stage">
+
+                <!-- 3D Heart Canvas Container -->
+                <div class="canvas-3d-wrapper" id="canvas3dWrapper">
+                    <!-- Three.js Canvas Mount -->
+                    <div id="threeHeartCanvas" class="three-viewport" role="region" aria-label="Interactive 3D Anatomical Heart Model"></div>
+
+                    <!-- Holographic HUD Overlay Elements -->
+                    <div class="viewport-hud-overlay" aria-hidden="true">
+                        <div class="hud-reticle top-left"></div>
+                        <div class="hud-reticle top-right"></div>
+                        <div class="hud-reticle bottom-left"></div>
+                        <div class="hud-reticle bottom-right"></div>
+                        <div class="hud-crosshair-center"></div>
+
+                        <!-- Active View Badge -->
+                        <div class="hud-view-badge" id="hudActiveViewBadge">
+                            <span class="badge-dot"></span>
+                            <span id="hudActiveViewText">VIEW: EXTERNAL ANATOMY</span>
+                        </div>
+
+                        <!-- Interaction Hint -->
+                        <div class="hud-interaction-hint">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 8v8M8 12h8"/>
+                            </svg>
+                            <span>DRAG TO ROTATE &bull; SCROLL TO ZOOM</span>
+                        </div>
+                    </div>
+
+                    <!-- Loading / Fallback Screen -->
+                    <div class="viewport-loading-overlay" id="viewportLoadingOverlay">
+                        <div class="loader-hologram-ring"></div>
+                        <div class="loader-heart-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="32" height="32" fill="#ff1e42">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </div>
+                        <p class="loader-text" id="loaderStatusText">INITIALIZING 3D CARDIAC CORE...</p>
+                        <p class="loader-sub">Loading high-resolution anatomical geometry</p>
+                    </div>
+
+                    <!-- Error Fallback Message (if WebGL/model fails) -->
+                    <div class="viewport-error-overlay" id="viewportErrorOverlay" hidden>
+                        <div class="error-icon-hex">&excl;</div>
+                        <h3 class="error-title">3D MODEL LOAD NOTICE</h3>
+                        <p class="error-desc" id="errorMessageText">The anatomical 3D geometry is currently loading or falling back to high-fidelity anatomical visualization.</p>
+                        <button type="button" class="btn-retry-3d" id="btnRetryLoad">RELOAD 3D SCENE</button>
+                    </div>
+
+                    <!-- Supplemental Microvascular Capillary Inset (Activated when Capillaries is selected) -->
+                    <div class="capillary-inset-modal" id="capillaryInset" hidden>
+                        <div class="inset-header">
+                            <div class="inset-title">
+                                <span class="inset-dot"></span>
+                                <span>MICROVASCULAR CAPILLARY NETWORK INSET</span>
+                            </div>
+                            <button type="button" class="btn-close-inset" id="btnCloseCapillaryInset" aria-label="Close capillary inset">&times;</button>
+                        </div>
+                        <div class="inset-body">
+                            <!-- Animated Microvascular SVG Flow -->
+                            <div class="capillary-diagram-container">
+                                <svg class="capillary-svg" viewBox="0 0 360 140" fill="none">
+                                    <!-- Arteriole (Oxygenated Red) -->
+                                    <path d="M10,70 Q70,70 100,50" stroke="#ff2d55" stroke-width="8" stroke-linecap="round"/>
+                                    <text x="15" y="45" fill="#ff6b81" font-size="11" font-weight="700">ARTERIOLE</text>
+
+                                    <!-- Capillary Mesh Loops -->
+                                    <path d="M100,50 Q140,20 180,25 Q220,30 260,50" stroke="#ff4757" stroke-width="3" stroke-dasharray="4 2"/>
+                                    <path d="M100,50 Q140,45 180,50 Q220,55 260,50" stroke="#d63031" stroke-width="2.5"/>
+                                    <path d="M100,50 Q140,75 180,75 Q220,75 260,90" stroke="#74b9ff" stroke-width="2.5"/>
+                                    <path d="M100,50 Q140,110 180,105 Q220,100 260,90" stroke="#0984e3" stroke-width="3" stroke-dasharray="4 2"/>
+
+                                    <!-- Venule (Deoxygenated Blue) -->
+                                    <path d="M260,70 Q290,70 350,70" stroke="#0084ff" stroke-width="8" stroke-linecap="round"/>
+                                    <text x="290" y="45" fill="#70a1ff" font-size="11" font-weight="700">VENULE</text>
+
+                                    <!-- Nutrient/Gas Exchange Particles -->
+                                    <circle cx="180" cy="50" r="4" fill="#00f3ff" class="exchange-pulse"/>
+                                    <circle cx="150" cy="35" r="3" fill="#e0faff" class="exchange-pulse"/>
+                                    <circle cx="210" cy="65" r="3" fill="#00f3ff" class="exchange-pulse"/>
+                                </svg>
+                            </div>
+                            <p class="inset-caption">
+                                <strong>Anatomical Note:</strong> Capillaries are microscopic vessels (5–10 μm diameter) distributed throughout all myocardium and body tissues where gas and nutrient transfer occurs. Because they are microscopic, they are represented here as an educational microvascular inset rather than a macroscopic structure inside the heart model.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Heart Controls Panel Underneath the 3D Model -->
+                <div class="heart-controls-panel" id="heartControlsPanel">
+
+                    <!-- Control Group A: Zoom -->
+                    <div class="control-box control-zoom">
+                        <span class="control-label">ZOOM</span>
+                        <div class="control-btn-group">
+                            <button type="button" class="btn-ctrl" id="btnZoomIn" title="Zoom In (+)">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                <span>IN</span>
+                            </button>
+                            <button type="button" class="btn-ctrl" id="btnZoomOut" title="Zoom Out (−)">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                <span>OUT</span>
+                            </button>
+                            <button type="button" class="btn-ctrl btn-ctrl-secondary" id="btnResetView" title="Reset View">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                    <path d="M3 3v5h5"/>
+                                </svg>
+                                <span>RESET</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Control Group B: 360° Rotation -->
+                    <div class="control-box control-rotation">
+                        <span class="control-label">360&deg; ROTATION</span>
+                        <div class="control-btn-group">
+                            <button type="button" class="btn-ctrl btn-ctrl-toggle active" id="btnToggleRotate" title="Toggle Auto-Rotation">
+                                <span class="btn-toggle-indicator"></span>
+                                <span id="rotateStateText">ROTATING</span>
+                            </button>
+                            <select id="selectRotateSpeed" class="ctrl-select" title="Rotation Speed">
+                                <option value="1.0">Slow (1x)</option>
+                                <option value="2.5" selected>Normal (2.5x)</option>
+                                <option value="5.0">Fast (5x)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Control Group C: Normal / Bisected Cutaway View -->
+                    <div class="control-box control-view-mode">
+                        <span class="control-label">ANATOMICAL VIEW</span>
+                        <div class="control-toggle-pills" role="radiogroup" aria-label="View Mode Toggle">
+                            <button type="button" class="view-pill active" id="btnViewExternal" data-view="external">
+                                EXTERNAL VIEW
+                            </button>
+                            <button type="button" class="view-pill" id="btnViewInternal" data-view="internal">
+                                INTERNAL VIEW (BISECTED)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Control Group D: Cardiovascular Structure Selector -->
+                    <div class="control-box control-structures">
+                        <span class="control-label">SELECT STRUCTURE</span>
+                        <div class="structure-select-wrapper">
+                            <select id="selectStructure" class="ctrl-select structure-dropdown">
+                                <option value="all">Whole Heart</option>
+                                <option value="arteries">Arteries (Coronary &amp; Systemic)</option>
+                                <option value="veins">Veins (Cardiac &amp; Systemic)</option>
+                                <option value="capillaries">Capillaries (Microvascular Bed)</option>
+                                <option value="aorta">Aorta (Ascending &amp; Arch)</option>
+                                <option value="pulmonary_artery">Pulmonary Artery</option>
+                                <option value="superior_vena_cava">Superior Vena Cava</option>
+                                <option value="inferior_vena_cava">Inferior Vena Cava</option>
+                                <option value="pulmonary_veins">Pulmonary Veins</option>
+                                <option value="chambers">Heart Chambers (Atria &amp; Ventricles)</option>
+                                <option value="valves">Heart Valves (AV &amp; Semilunar)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div> <!-- End #heartControlsPanel -->
+
+                <!-- Structure Educational Description Banner (Beside/below 3D view) -->
+                <div class="structure-info-card" id="structureInfoCard">
+                    <div class="info-card-header">
+                        <span class="info-tag">ANATOMICAL FOCUS</span>
+                        <h3 class="info-title" id="structureTitle">Whole Heart (Cor)</h3>
+                    </div>
+                    <p class="info-desc" id="structureDescription">
+                        The human heart is a muscular organ with four chambers that pumps blood through the circulatory system. Deoxygenated blood returns from the body into the right atrium, travels to the right ventricle, and is pumped to the lungs. Oxygen-rich blood returns to the left atrium, moves into the left ventricle, and is propelled through the aorta to sustain all body tissues.
+                    </p>
+                </div>
+
+            </div> <!-- End .vis-center-stage -->
+
+            <!-- Right Column / Supplemental Educational Panels -->
+            <aside class="vis-side-deck">
+
+                <!-- 5. Color-Coded Visual Feedback Legend -->
+                <div class="side-card legend-card">
+                    <div class="side-card-header">
+                        <span class="card-icon-hex">&bull;</span>
+                        <h3 class="side-card-title">VISUAL FEEDBACK LEGEND</h3>
+                    </div>
+                    <div class="legend-list">
+                        <div class="legend-item">
+                            <span class="legend-dot dot-cyan"></span>
+                            <div class="legend-text">
+                                <strong>Cyan Neon:</strong>
+                                <span>Selected anatomical structure, vessel marker, or standard interface focus.</span>
+                            </div>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot dot-amber"></span>
+                            <div class="legend-text">
+                                <strong>Amber / Gold:</strong>
+                                <span>Educational attention indicator for elevated physiological factors.</span>
+                            </div>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot dot-red"></span>
+                            <div class="legend-text">
+                                <strong>Scarlet / Red:</strong>
+                                <span>Schematic warning marker for clinically notable readings or high-stress zones.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="legend-disclaimer">
+                        *Note: Color highlights are educational indicators and do NOT represent a confirmed medical diagnosis or actual vessel lesion.
+                    </p>
+                </div>
+
+                <!-- 4. Patient-Specific Cardiovascular Health Factors -->
+                <div class="side-card factors-card">
+                    <div class="side-card-header">
+                        <span class="card-icon-hex">&#9829;</span>
+                        <h3 class="side-card-title">YOUR CARDIOVASCULAR HEALTH FACTORS</h3>
+                    </div>
+                    <p class="card-intro">
+                        Personalized educational analysis based on values entered in your Patient Profile:
+                    </p>
+
+                    <!-- Dynamically Populated Health Factor Cards -->
+                    <div class="factors-scroll-list" id="factorsScrollList">
+                        <!-- Populated via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- 6. Explanation Panel: What Your Data May Mean -->
+                <div class="side-card explanation-card">
+                    <div class="side-card-header">
+                        <span class="card-icon-hex">&#9776;</span>
+                        <h3 class="side-card-title">WHAT YOUR DATA MAY MEAN</h3>
+                    </div>
+
+                    <div class="explanation-tabs-content">
+                        <div class="exp-block">
+                            <h4 class="exp-subhead">1. ENTERED MEASUREMENTS</h4>
+                            <p class="exp-text" id="expEnteredSummary">Reviewing submitted patient parameters.</p>
+                        </div>
+
+                        <div class="exp-block">
+                            <h4 class="exp-subhead">2. GENERAL EDUCATIONAL INTERPRETATIONS</h4>
+                            <p class="exp-text" id="expGeneralEdu">
+                                Cardiovascular health depends on the balance between cardiac muscle strength, vessel lumen diameter, blood pressure, and metabolic fuel regulation. Maintaining target blood pressure (&lt;120/80 mmHg) and healthy lipid balance protects endothelial lining from cumulative mechanical stress.
+                            </p>
+                        </div>
+
+                        <div class="exp-block">
+                            <h4 class="exp-subhead">3. SCHEMATIC VISUALIZATION EFFECTS</h4>
+                            <p class="exp-text">
+                                Any glowing color highlights, arterial glow pulses, or pressure indications rendered on the 3D heart are illustrative schematic models designed to assist visual understanding of hemodynamic principles.
+                            </p>
+                        </div>
+
+                        <div class="exp-block">
+                            <h4 class="exp-subhead">4. CLINICALLY CONFIRMED FINDINGS</h4>
+                            <p class="exp-text text-neutral">
+                                <strong>None Fabricated.</strong> In accordance with medical ethics and diagnostic standards, no individual cardiovascular risk percentage, clinical probability, or disease diagnosis is simulated. Clinical findings require comprehensive medical evaluation and validated laboratory diagnostics by licensed healthcare practitioners.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Mandatory Medical Disclaimer -->
+                    <div class="mandatory-prototype-alert" role="note">
+                        <div class="alert-icon-wrap" aria-hidden="true">&iexcl;</div>
+                        <p class="alert-quote">
+                            "This visualization is an educational prototype. Highlighted vessel changes are illustrative and do not confirm damage or disease. Consult a qualified healthcare professional for clinical interpretation."
+                        </p>
+                    </div>
+                </div>
+
+            </aside> <!-- End .vis-side-deck -->
+
+        </main>
+
+        <!-- Bottom Action Bar -->
+        <footer class="vis-footer-bar">
+            <a href="patient.html" class="btn-footer-back">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <span>BACK TO PATIENT PROFILE</span>
+            </a>
+            <div class="footer-status-tag">
+                <span class="status-pulse-dot"></span>
+                <span>TSVP 3D ENGINE ACTIVE &bull; THREE.JS R128</span>
+            </div>
+            <div class="footer-action-group" style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                <a href="index.html" class="btn-footer-home">
+                    <span>SYSTEM CORE LANDING</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+                <a href="body.html" class="btn-footer-plan" title="Proceed to Whole-Body Anatomy (Page 4)">
+                    <span>CONTINUE TO WHOLE-BODY ANATOMY</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </footer>
+
+    </div> <!-- End .vis-page-container -->
+
+    <!-- Scripts: Local Three.js Libraries + Visualization Controller -->
+    <script src="libs/three.min.js"></script>
+    <script src="libs/OrbitControls.js"></script>
+    <script src="libs/DRACOLoader.js"></script>
+    <script src="libs/GLTFLoader.js"></script>
+
+    <!-- CDN Fallback in case local script execution is blocked -->
+    <script>
+    if (typeof THREE === 'undefined') {
+        document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+        document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\/script>');
+        document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"><\/script>');
+        document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"><\/script>');
+    }
+    </script>
+
+    <script src="script.js"></script>
+    <script src="visualization.js"></script>
+</body>
+</html>

@@ -1,0 +1,1066 @@
+/* ==========================================================================
+   TSVP — THE SMART VASCULAR PREDICTOR
+   Futuristic Medical AI Landing Page Stylesheet
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens & CSS Variables
+   -------------------------------------------------------------------------- */
+:root {
+    /* Color Palette - Deep Navy Void & Cyber Dark */
+    --bg-void: #01040a;
+    --bg-deep-navy: #020614;
+    --bg-midnight: #040d24;
+    --bg-space: #071536;
+
+    /* Cyan Neon Spectrum */
+    --cyan-core: #00f3ff;
+    --cyan-bright: #38edff;
+    --cyan-pale: #e0faff;
+    --cyan-ice: #a5f3fc;
+    --cyan-glow: rgba(0, 243, 255, 0.6);
+    --cyan-glow-subtle: rgba(0, 243, 255, 0.18);
+    --cyan-dim: rgba(0, 243, 255, 0.08);
+
+    /* Electric Neon Blue Spectrum */
+    --blue-neon: #0066ff;
+    --blue-electric: #00a2ff;
+    --blue-ray: rgba(0, 162, 255, 0.22);
+    --blue-ray-soft: rgba(0, 140, 255, 0.1);
+
+    /* Cardiovascular Crimson & Scarlet Spectrum */
+    --red-luminous: #ff1e42;
+    --red-scarlet: #ff2d55;
+    --red-crimson: #dc2626;
+    --red-arterial: #ff4757;
+    --red-aura-core: rgba(255, 30, 66, 0.55);
+    --red-aura-spread: rgba(255, 10, 50, 0.2);
+    --orange-flare: rgba(255, 87, 34, 0.35);
+
+    /* Typography */
+    --font-heading: 'Orbitron', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'Rajdhani', -apple-system, BlinkMacSystemFont, monospace;
+
+    /* Heartbeat Timing */
+    --pulse-duration: 1.25s;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Global Base
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    background-color: var(--bg-void);
+    color: var(--cyan-pale);
+    font-family: var(--font-mono);
+    overflow-x: hidden;
+    position: relative;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at 50% 50%, var(--bg-midnight) 0%, var(--bg-deep-navy) 45%, var(--bg-void) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   3. Background Layers: Canvas, Cyber Grid, Rays & Scanlines
+   -------------------------------------------------------------------------- */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Subtle Perspective Grid Lines */
+.cyber-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    background-image: 
+        linear-gradient(to right, rgba(0, 243, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 243, 255, 0.035) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.1) 75%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.1) 75%, transparent 100%);
+}
+
+/* Ambient Radial Soft Glow in Center */
+.ambient-glow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 900px;
+    max-width: 95vw;
+    max-height: 95vh;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(0, 162, 255, 0.09) 0%,
+        rgba(0, 243, 255, 0.04) 35%,
+        transparent 70%
+    );
+    z-index: 2;
+    pointer-events: none;
+    filter: blur(50px);
+}
+
+/* Vignette Darkening at Edges */
+.vignette-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    background: radial-gradient(
+        circle at 50% 50%,
+        transparent 45%,
+        rgba(1, 4, 10, 0.6) 80%,
+        rgba(1, 4, 10, 0.95) 100%
+    );
+}
+
+/* Subtle CRT/Holographic Scanlines */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.2) 50%,
+        rgba(0, 0, 0, 0.2)
+    );
+    background-size: 100% 4px;
+    opacity: 0.35;
+}
+
+/* --------------------------------------------------------------------------
+   4. Corner HUD Telemetry Details (Subtle Sci-Fi Medical AI Framing)
+   -------------------------------------------------------------------------- */
+.hud-corner {
+    position: fixed;
+    z-index: 10;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: rgba(165, 243, 252, 0.45);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    pointer-events: none;
+}
+
+.hud-code {
+    color: rgba(0, 243, 255, 0.75);
+    font-weight: 600;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--cyan-core);
+    box-shadow: 0 0 6px var(--cyan-core);
+    margin-right: 6px;
+    animation: blinkStatus 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes blinkStatus {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.hud-top-left {
+    top: 28px;
+    left: 32px;
+    border-left: 2px solid rgba(0, 243, 255, 0.3);
+    padding-left: 10px;
+}
+
+.hud-top-right {
+    top: 28px;
+    right: 32px;
+    text-align: right;
+    border-right: 2px solid rgba(0, 243, 255, 0.3);
+    padding-right: 10px;
+}
+
+.hud-bottom-left {
+    bottom: 24px;
+    left: 32px;
+    border-left: 2px solid rgba(0, 243, 255, 0.2);
+    padding-left: 10px;
+}
+
+.hud-bottom-right {
+    bottom: 24px;
+    right: 32px;
+    text-align: right;
+    border-right: 2px solid rgba(0, 243, 255, 0.2);
+    padding-right: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Main Stage & Layout (Symmetrical, Cinematic, Perfectly Centered)
+   -------------------------------------------------------------------------- */
+.main-container {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 1200px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   6. Header Section: TSVP & Subtitle
+   -------------------------------------------------------------------------- */
+.header-section {
+    text-align: center;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInDown 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Large Glowing Futuristic TSVP Title */
+.main-title {
+    font-family: var(--font-heading);
+    font-size: clamp(3.4rem, 7.5vw, 6.2rem);
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cyan-pale);
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: inline-block;
+
+    /* Intense Electric Cyan Glowing Text Shadows */
+    text-shadow:
+        0 0 10px rgba(0, 243, 255, 0.95),
+        0 0 22px rgba(0, 243, 255, 0.8),
+        0 0 45px rgba(0, 210, 255, 0.55),
+        0 0 85px rgba(0, 160, 255, 0.35),
+        0 0 120px rgba(0, 100, 255, 0.2);
+
+    /* Subtle luminous light sheen */
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #e2fbff 35%,
+        #92f2ff 75%,
+        #00e5ff 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 14px rgba(0, 243, 255, 0.65));
+    animation: titleGlowPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlowPulse {
+    0% {
+        filter: drop-shadow(0 0 14px rgba(0, 243, 255, 0.65));
+        letter-spacing: 0.08em;
+    }
+    100% {
+        filter: drop-shadow(0 0 26px rgba(0, 243, 255, 0.95)) drop-shadow(0 0 50px rgba(0, 162, 255, 0.4));
+        letter-spacing: 0.085em;
+    }
+}
+
+/* Small Subtitle: THE SMART VASCULAR PREDICTOR */
+.sub-title {
+    font-family: var(--font-mono);
+    font-size: clamp(0.78rem, 1.45vw, 1.15rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: clamp(0.28em, 0.65vw, 0.44em);
+    color: var(--cyan-ice);
+    margin-top: 0.85rem;
+    position: relative;
+    padding-left: clamp(0.28em, 0.65vw, 0.44em); /* Offset letter spacing for perfect optical centering */
+    text-shadow:
+        0 0 8px rgba(0, 243, 255, 0.7),
+        0 0 18px rgba(0, 243, 255, 0.35);
+    opacity: 0.95;
+    animation: fadeIn 1.8s ease-out forwards;
+}
+
+/* --------------------------------------------------------------------------
+   7. Center Heart Chamber: Volumetric Rays, HUD Rings & Glowing Heart
+   -------------------------------------------------------------------------- */
+.heart-chamber {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    height: 480px;
+    margin: 1.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+/* Soft Volumetric Rays of Light Behind the Heart */
+.volumetric-rays {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg,
+        rgba(0, 243, 255, 0.08) 25deg,
+        transparent 45deg,
+        rgba(0, 140, 255, 0.12) 80deg,
+        transparent 110deg,
+        rgba(0, 243, 255, 0.09) 150deg,
+        transparent 180deg,
+        rgba(0, 140, 255, 0.11) 220deg,
+        transparent 250deg,
+        rgba(0, 243, 255, 0.08) 290deg,
+        transparent 320deg,
+        rgba(0, 140, 255, 0.1) 350deg,
+        transparent 360deg
+    );
+    filter: blur(28px);
+    pointer-events: none;
+    z-index: 1;
+    animation: rayRotate 60s linear infinite;
+}
+
+@keyframes rayRotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Blue Ray of Light Beneath the Heart */
+.bottom-light-beam {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 220px;
+    background: radial-gradient(
+        ellipse at 50% 100%,
+        rgba(0, 243, 255, 0.22) 0%,
+        rgba(0, 102, 255, 0.14) 40%,
+        transparent 75%
+    );
+    filter: blur(22px);
+    pointer-events: none;
+    z-index: 1;
+    animation: beamBreathe 3s ease-in-out infinite alternate;
+}
+
+@keyframes beamBreathe {
+    0% { opacity: 0.6; transform: translateX(-50%) scaleX(0.9); }
+    100% { opacity: 1; transform: translateX(-50%) scaleX(1.15); }
+}
+
+/* Deep Luminous Crimson Aura (Pulses with Heartbeat) */
+.heart-aura {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 30, 66, 0.42) 0%,
+        rgba(255, 23, 68, 0.25) 35%,
+        rgba(255, 15, 50, 0.1) 60%,
+        transparent 75%
+    );
+    filter: blur(36px);
+    z-index: 2;
+    pointer-events: none;
+    animation: auraHeartbeat var(--pulse-duration) cubic-bezier(0.21, 0.61, 0.35, 1) infinite;
+}
+
+@keyframes auraHeartbeat {
+    0% {
+        transform: translate(-50%, -50%) scale(0.95);
+        opacity: 0.7;
+    }
+    14% {
+        transform: translate(-50%, -50%) scale(1.16);
+        opacity: 1;
+        background: radial-gradient(
+            circle,
+            rgba(255, 45, 85, 0.58) 0%,
+            rgba(255, 23, 68, 0.35) 40%,
+            transparent 75%
+        );
+    }
+    28% {
+        transform: translate(-50%, -50%) scale(1.02);
+        opacity: 0.8;
+    }
+    42% {
+        transform: translate(-50%, -50%) scale(1.22);
+        opacity: 1;
+        background: radial-gradient(
+            circle,
+            rgba(255, 55, 95, 0.62) 0%,
+            rgba(255, 23, 68, 0.38) 42%,
+            transparent 75%
+        );
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(0.95);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.95);
+        opacity: 0.7;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   8. Holographic HUD Rings (SVG Circles, Rotations, Radar Scan)
+   -------------------------------------------------------------------------- */
+.hud-rings-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 520px;
+    height: 520px;
+    max-width: 90vw;
+    max-height: 90vw;
+    z-index: 3;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.hud-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+}
+
+/* Outer Ring */
+.ring-outer {
+    animation: ringRotateClockwise 45s linear infinite;
+}
+
+.ring-outer .ring-track {
+    fill: none;
+    stroke: rgba(0, 243, 255, 0.12);
+    stroke-width: 1;
+}
+
+.ring-outer .ring-segment-1 {
+    fill: none;
+    stroke: var(--cyan-core);
+    stroke-width: 2.2;
+    stroke-dasharray: 60 40 120 70 80 150;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 6px var(--cyan-core));
+}
+
+.ring-outer .ring-segment-2 {
+    fill: none;
+    stroke: rgba(0, 162, 255, 0.7);
+    stroke-width: 1.5;
+    stroke-dasharray: 10 30 15 45 10 80;
+}
+
+.ring-outer .ring-dots {
+    fill: none;
+    stroke: rgba(0, 243, 255, 0.28);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 14;
+}
+
+.ring-outer .ring-text {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    fill: rgba(0, 243, 255, 0.55);
+    text-anchor: middle;
+    font-weight: 600;
+}
+
+/* Middle Ring (Counter-Rotating) */
+.ring-middle {
+    width: 88%;
+    height: 88%;
+    top: 6%;
+    left: 6%;
+    animation: ringRotateCounterClockwise 32s linear infinite;
+}
+
+.ring-middle .ring-dashed-arc {
+    fill: none;
+    stroke: rgba(0, 243, 255, 0.4);
+    stroke-width: 1.2;
+    stroke-dasharray: 200 80 150 90;
+    stroke-linecap: square;
+    filter: drop-shadow(0 0 5px rgba(0, 243, 255, 0.4));
+}
+
+.ring-middle .ring-dashed-counter {
+    fill: none;
+    stroke: rgba(0, 140, 255, 0.3);
+    stroke-width: 1;
+    stroke-dasharray: 4 12;
+}
+
+.orbital-node {
+    fill: #ffffff;
+    stroke: var(--cyan-core);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 7px var(--cyan-core));
+}
+
+/* Inner Ring & Reticle */
+.ring-inner {
+    width: 74%;
+    height: 74%;
+    top: 13%;
+    left: 13%;
+    animation: ringRotateClockwise 22s linear infinite;
+}
+
+.ring-inner .ring-fine-track {
+    fill: none;
+    stroke: rgba(0, 243, 255, 0.2);
+    stroke-width: 1;
+}
+
+.ring-inner .ring-fine-dashed {
+    fill: none;
+    stroke: rgba(0, 243, 255, 0.35);
+    stroke-width: 1.2;
+    stroke-dasharray: 12 8;
+}
+
+.ring-inner .reticle-line {
+    stroke: var(--cyan-core);
+    stroke-width: 2;
+    filter: drop-shadow(0 0 5px var(--cyan-core));
+}
+
+.ring-inner .scanning-arc {
+    fill: none;
+    stroke: rgba(0, 243, 255, 0.85);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 8px var(--cyan-core));
+}
+
+/* Radar Sweeping Light Arc */
+.radar-sweep {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 380px;
+    height: 380px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        rgba(0, 243, 255, 0.22) 0deg,
+        rgba(0, 243, 255, 0.05) 30deg,
+        transparent 65deg,
+        transparent 360deg
+    );
+    pointer-events: none;
+    animation: radarSweep 6s linear infinite;
+}
+
+@keyframes ringRotateClockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes ringRotateCounterClockwise {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes radarSweep {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* --------------------------------------------------------------------------
+   9. Glowing Anatomical Heart (Main Visual Focus)
+   -------------------------------------------------------------------------- */
+.heart-wrapper {
+    position: relative;
+    z-index: 4;
+    width: 320px;
+    height: 320px;
+    max-width: 70vw;
+    max-height: 70vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.heart-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    mix-blend-mode: screen; /* Seamlessly blends into the dark background and glows */
+    filter: 
+        drop-shadow(0 0 25px rgba(255, 30, 66, 0.8))
+        drop-shadow(0 0 55px rgba(255, 15, 50, 0.45))
+        brightness(1.08)
+        contrast(1.06);
+
+    animation: anatomicalHeartbeat var(--pulse-duration) cubic-bezier(0.21, 0.61, 0.35, 1) infinite;
+    transform-origin: center center;
+    will-change: transform, filter;
+}
+
+/* Authentic Anatomical Heartbeat Keyframes (Lub-Dub Dual Phase Rhythm) */
+@keyframes anatomicalHeartbeat {
+    0% {
+        transform: scale(1);
+        filter: 
+            drop-shadow(0 0 22px rgba(255, 30, 66, 0.75))
+            drop-shadow(0 0 50px rgba(255, 15, 50, 0.4))
+            brightness(1.05);
+    }
+    /* First Systolic Contraction (Lub) */
+    14% {
+        transform: scale(1.058);
+        filter: 
+            drop-shadow(0 0 38px rgba(255, 45, 85, 0.95))
+            drop-shadow(0 0 75px rgba(255, 20, 60, 0.65))
+            drop-shadow(0 0 110px rgba(255, 60, 0, 0.3))
+            brightness(1.22);
+    }
+    /* Brief Diastolic Recoil */
+    26% {
+        transform: scale(1.018);
+        filter: 
+            drop-shadow(0 0 26px rgba(255, 30, 66, 0.8))
+            drop-shadow(0 0 55px rgba(255, 15, 50, 0.45))
+            brightness(1.08);
+    }
+    /* Secondary Systolic Beat (Dub) */
+    40% {
+        transform: scale(1.075);
+        filter: 
+            drop-shadow(0 0 44px rgba(255, 45, 85, 1))
+            drop-shadow(0 0 85px rgba(255, 20, 60, 0.7))
+            drop-shadow(0 0 120px rgba(255, 60, 0, 0.35))
+            brightness(1.26);
+    }
+    /* Resting Period */
+    68% {
+        transform: scale(1);
+        filter: 
+            drop-shadow(0 0 22px rgba(255, 30, 66, 0.75))
+            drop-shadow(0 0 50px rgba(255, 15, 50, 0.4))
+            brightness(1.05);
+    }
+    100% {
+        transform: scale(1);
+        filter: 
+            drop-shadow(0 0 22px rgba(255, 30, 66, 0.75))
+            drop-shadow(0 0 50px rgba(255, 15, 50, 0.4))
+            brightness(1.05);
+    }
+}
+
+/* Arterial Flare Flash synced with pulse */
+.heart-pulse-flare {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 60, 60, 0.3) 0%,
+        rgba(255, 20, 60, 0.12) 50%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 5;
+    mix-blend-mode: screen;
+    animation: flarePulse var(--pulse-duration) cubic-bezier(0.21, 0.61, 0.35, 1) infinite;
+}
+
+@keyframes flarePulse {
+    0%, 65%, 100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    14%, 40% {
+        opacity: 0.85;
+        transform: translate(-50%, -50%) scale(1.18);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   10. Medical ECG Cardiogram Indicator (Subtle Cardiac Waves)
+   -------------------------------------------------------------------------- */
+.cardio-wave-container {
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 32px;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.ecg-line-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.ecg-path {
+    fill: none;
+    stroke: var(--cyan-core);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 5px var(--cyan-core));
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: ecgFlow 3.2s linear infinite;
+}
+
+@keyframes ecgFlow {
+    0% {
+        stroke-dashoffset: 400;
+        opacity: 0.2;
+    }
+    15% {
+        opacity: 1;
+    }
+    85% {
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0.2;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   11. Footer Section: Tagline with Neon Glowing Accents
+   -------------------------------------------------------------------------- */
+.footer-section {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.15rem;
+    animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Futuristic Glowing Cyan GET STARTED Button */
+.get-started-wrapper,
+.enter-system-wrapper {
+    margin-top: 0.15rem;
+    display: flex;
+    justify-content: center;
+}
+
+.get-started-btn,
+.enter-system-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    padding: 0.72rem 2.1rem;
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--cyan-pale);
+    background: rgba(3, 15, 38, 0.7);
+    border: 1px solid rgba(0, 243, 255, 0.45);
+    border-radius: 50px;
+    backdrop-filter: blur(8px);
+    box-shadow: 
+        0 0 16px rgba(0, 243, 255, 0.22),
+        inset 0 0 12px rgba(0, 243, 255, 0.08);
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.get-started-btn:hover,
+.enter-system-btn:hover {
+    color: #ffffff;
+    border-color: var(--cyan-core);
+    background: rgba(0, 243, 255, 0.12);
+    box-shadow: 
+        0 0 28px rgba(0, 243, 255, 0.6),
+        0 0 50px rgba(0, 162, 255, 0.35),
+        inset 0 0 18px rgba(0, 243, 255, 0.25);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.get-started-btn:active,
+.enter-system-btn:active {
+    transform: translateY(0) scale(0.99);
+}
+
+.get-started-btn .btn-arrow-icon,
+.enter-system-btn .btn-arrow-icon {
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 5px var(--cyan-core));
+}
+
+.get-started-btn:hover .btn-arrow-icon,
+.enter-system-btn:hover .btn-arrow-icon {
+    transform: translateX(4px);
+}
+
+.tagline-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    max-width: 90vw;
+}
+
+/* Thin Neon-Blue Glowing Horizontal Lines on Either Side */
+.tagline-line {
+    position: relative;
+    height: 1.5px;
+    width: clamp(45px, 8vw, 110px);
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0, 243, 255, 0.8) 70%,
+        var(--cyan-core) 100%
+    );
+    box-shadow: 0 0 8px rgba(0, 243, 255, 0.7);
+    display: flex;
+    align-items: center;
+}
+
+.line-right {
+    background: linear-gradient(
+        90deg,
+        var(--cyan-core) 0%,
+        rgba(0, 243, 255, 0.8) 30%,
+        transparent 100%
+    );
+    justify-content: flex-start;
+}
+
+.line-left {
+    justify-content: flex-end;
+}
+
+/* Glowing Diamond Accent Pip at the inner end of the lines */
+.line-pip {
+    display: block;
+    width: 5px;
+    height: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 0 6px var(--cyan-core);
+    transform: rotate(45deg);
+}
+
+/* Tagline Typography */
+.tagline-text {
+    font-family: var(--font-mono);
+    font-size: clamp(0.82rem, 1.4vw, 1.15rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: clamp(0.24em, 0.45vw, 0.36em);
+    color: var(--cyan-pale);
+    white-space: nowrap;
+    padding-left: clamp(0.24em, 0.45vw, 0.36em); /* Optical center */
+    text-shadow:
+        0 0 8px rgba(0, 243, 255, 0.85),
+        0 0 18px rgba(0, 243, 255, 0.4),
+        0 0 35px rgba(0, 162, 255, 0.2);
+    animation: taglineGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes taglineGlow {
+    0% {
+        text-shadow:
+            0 0 7px rgba(0, 243, 255, 0.7),
+            0 0 16px rgba(0, 243, 255, 0.3);
+    }
+    100% {
+        text-shadow:
+            0 0 12px rgba(0, 243, 255, 1),
+            0 0 25px rgba(0, 243, 255, 0.6),
+            0 0 45px rgba(0, 162, 255, 0.35);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   12. Entrance Animations
+   -------------------------------------------------------------------------- */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 0.95; }
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsive Adaptations
+   -------------------------------------------------------------------------- */
+@media (max-height: 760px) {
+    .main-container {
+        padding: 1.25rem 1rem;
+        min-height: 100vh;
+        height: auto;
+    }
+    .heart-chamber {
+        height: 380px;
+        margin: 0.75rem auto;
+    }
+    .heart-wrapper {
+        width: 250px;
+        height: 250px;
+    }
+    .hud-rings-container {
+        width: 420px;
+        height: 420px;
+    }
+    .hud-corner {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hud-corner {
+        display: none; /* Keep clean and uncluttered on mobile */
+    }
+    .main-container {
+        padding: 2rem 1rem;
+    }
+    .heart-chamber {
+        height: 360px;
+        max-width: 360px;
+    }
+    .hud-rings-container {
+        width: 340px;
+        height: 340px;
+    }
+    .heart-wrapper {
+        width: 230px;
+        height: 230px;
+    }
+    .tagline-line {
+        width: 30px;
+    }
+    .tagline-wrapper {
+        gap: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .heart-chamber {
+        height: 310px;
+        max-width: 310px;
+    }
+    .hud-rings-container {
+        width: 290px;
+        height: 290px;
+    }
+    .heart-wrapper {
+        width: 195px;
+        height: 195px;
+    }
+    .cardio-wave-container {
+        width: 200px;
+        bottom: -10px;
+    }
+}

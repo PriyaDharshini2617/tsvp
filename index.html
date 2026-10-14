@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TSVP — The Smart Vascular Predictor. Advanced cardiovascular medical AI system for predictive vascular diagnostics and heart health intelligence.">
+    <meta name="keywords" content="TSVP, Smart Vascular Predictor, Medical AI, Heart Health, Cardiovascular Prediction, Cardiology">
+    <title>TSVP — The Smart Vascular Predictor | The Future of Heart Health</title>
+
+    <!-- Google Fonts: Orbitron & Rajdhani -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas for Interactive Particles & Ambient Light Dust -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- Sci-Fi Grid Backdrop & Lighting Overlays -->
+    <div class="cyber-grid" aria-hidden="true"></div>
+    <div class="ambient-glow" aria-hidden="true"></div>
+    <div class="vignette-overlay" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- Corner Sci-Fi Telemetry Metadata (Subtle Medical HUD Accents) -->
+    <div class="hud-corner hud-top-left" aria-hidden="true">
+        <span class="hud-code">SYS.AI // VASCULAR-CORE</span>
+        <span class="hud-status"><span class="status-dot"></span>NEURAL MATRIX ACTIVE</span>
+    </div>
+    <div class="hud-corner hud-top-right" aria-hidden="true">
+        <span class="hud-code">CARDIAC TELEMETRY</span>
+        <span class="hud-status" id="hud-bpm-display">72 BPM &bull; SINUS RHYTHM</span>
+    </div>
+    <div class="hud-corner hud-bottom-left" aria-hidden="true">
+        <span class="hud-code">LATENCY: 0.8ms</span>
+        <span class="hud-status">PREDICTION ENGINE v2.4</span>
+    </div>
+    <div class="hud-corner hud-bottom-right" aria-hidden="true">
+        <span class="hud-code">OPTICAL SENSING</span>
+        <span class="hud-status">VESSEL RESOLUTION: 8K</span>
+    </div>
+
+    <!-- Main Symmetrical Landing Stage -->
+    <main class="main-container" id="landing-stage">
+
+        <!-- 1. Top Title Section -->
+        <header class="header-section">
+            <h1 class="main-title" id="tsvp-title">TSVP</h1>
+            <h2 class="sub-title">THE SMART VASCULAR PREDICTOR</h2>
+        </header>
+
+        <!-- 2. Central Anatomical Heart & Holographic HUD Chamber -->
+        <section class="heart-chamber" aria-label="Anatomical Heart Visualizer">
+            <!-- Volumetric Light Rays (Behind & Beneath) -->
+            <div class="volumetric-rays" aria-hidden="true"></div>
+            <div class="bottom-light-beam" aria-hidden="true"></div>
+
+            <!-- Deep Crimson Pulse Aura -->
+            <div class="heart-aura" aria-hidden="true"></div>
+
+            <!-- Holographic Cyan HUD Rings -->
+            <div class="hud-rings-container" id="hudRings" aria-hidden="true">
+                <!-- Outer Segmented Orbital Ring -->
+                <svg class="hud-ring ring-outer" viewBox="0 0 560 560">
+                    <circle class="ring-track" cx="280" cy="280" r="260" />
+                    <circle class="ring-segment-1" cx="280" cy="280" r="260" />
+                    <circle class="ring-segment-2" cx="280" cy="280" r="260" />
+                    <circle class="ring-dots" cx="280" cy="280" r="248" />
+                    <!-- Degree Markers -->
+                    <text x="280" y="16" class="ring-text">000&deg;</text>
+                    <text x="548" y="284" class="ring-text">090&deg;</text>
+                    <text x="280" y="552" class="ring-text">180&deg;</text>
+                    <text x="12" y="284" class="ring-text">270&deg;</text>
+                </svg>
+
+                <!-- Middle Counter-Rotating Dashed Telemetry Ring -->
+                <svg class="hud-ring ring-middle" viewBox="0 0 500 500">
+                    <circle class="ring-dashed-arc" cx="250" cy="250" r="225" />
+                    <circle class="ring-dashed-counter" cx="250" cy="250" r="215" />
+                    <!-- Orbital Nodes -->
+                    <circle class="orbital-node node-1" cx="250" cy="25" r="3.5" />
+                    <circle class="orbital-node node-2" cx="475" cy="250" r="3.5" />
+                    <circle class="orbital-node node-3" cx="250" cy="475" r="3.5" />
+                    <circle class="orbital-node node-4" cx="25" cy="250" r="3.5" />
+                </svg>
+
+                <!-- Inner Scanning Reticle & Crosshairs -->
+                <svg class="hud-ring ring-inner" viewBox="0 0 420 420">
+                    <circle class="ring-fine-track" cx="210" cy="210" r="190" />
+                    <circle class="ring-fine-dashed" cx="210" cy="210" r="175" />
+                    <!-- Reticle Crosshair Ticks -->
+                    <line x1="210" y1="12" x2="210" y2="30" class="reticle-line" />
+                    <line x1="210" y1="390" x2="210" y2="408" class="reticle-line" />
+                    <line x1="12" y1="210" x2="30" y2="210" class="reticle-line" />
+                    <line x1="390" y1="210" x2="408" y2="210" class="reticle-line" />
+                    <!-- Holographic Scan Arc -->
+                    <path class="scanning-arc" d="M 210,35 A 175,175 0 0,1 385,210" />
+                </svg>
+
+                <!-- Radar Sweeping Beam -->
+                <div class="radar-sweep" aria-hidden="true"></div>
+            </div>
+
+            <!-- Glowing Anatomical Heart -->
+            <div class="heart-wrapper" id="heartWrapper">
+                <img 
+                    src="assets/heart.png" 
+                    alt="TSVP Glowing Anatomical Human Heart Visualizer" 
+                    class="heart-image" 
+                    id="anatomicalHeart"
+                    loading="eager"
+                    onerror="this.onerror=null; this.src='assets/heart.jpg';"
+                >
+                <!-- Arterial Pulse Glow Filter Overlay -->
+                <div class="heart-pulse-flare" aria-hidden="true"></div>
+            </div>
+
+            <!-- ECG Pulse Wave Indicator Beneath the Heart -->
+            <div class="cardio-wave-container" aria-hidden="true">
+                <svg class="ecg-line-svg" viewBox="0 0 320 40">
+                    <path class="ecg-path" d="M0,20 L80,20 L95,20 L105,8 L115,32 L125,5 L135,28 L145,20 L170,20 L185,20 L195,10 L205,30 L215,7 L225,26 L235,20 L320,20" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- 3. Bottom Tagline & Navigation Section -->
+        <footer class="footer-section">
+            <div class="tagline-wrapper">
+                <div class="tagline-line line-left" aria-hidden="true">
+                    <span class="line-pip"></span>
+                </div>
+                <p class="tagline-text">THE FUTURE OF HEART HEALTH</p>
+                <div class="tagline-line line-right" aria-hidden="true">
+                    <span class="line-pip"></span>
+                </div>
+            </div>
+
+            <!-- Futuristic Glowing Cyan GET STARTED Button -->
+            <div class="get-started-wrapper enter-system-wrapper">
+                <a href="patient.html" class="get-started-btn enter-system-btn" id="getStartedBtn" aria-label="Get Started with TSVP Patient Profile">
+                    <span class="btn-ambient-glow" aria-hidden="true"></span>
+                    <span class="btn-text">GET STARTED</span>
+                    <svg class="btn-arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>

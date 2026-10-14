@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TSVP Personalized Heart Health Plan — Evidence-based cardiovascular recommendations generated dynamically from individual patient clinical telemetry.">
+    <title>TSVP — Your Personalized Heart Health Plan</title>
+
+    <!-- Google Fonts: Orbitron (Sci-Fi Headers), Rajdhani (Data/Telemetry), Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets: Base Styles + Recommendations Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="recommendations.css">
+</head>
+<body class="rec-body">
+
+    <!-- Background Atmospheric Cyber Layers -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="cyber-grid" aria-hidden="true"></div>
+    <div class="ambient-glow" aria-hidden="true"></div>
+    <div class="vignette-overlay" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <!-- Main Page Container -->
+    <div class="rec-page-container">
+
+        <!-- ===================================================================
+             1. TOP NAVIGATION BAR
+             =================================================================== -->
+        <header class="rec-top-bar">
+            <div class="nav-left">
+                <a href="index.html" class="nav-brand-link" title="Return to TSVP Landing Page">
+                    <span class="brand-badge-core">TSVP</span>
+                    <span class="brand-divider">/</span>
+                    <span class="brand-module">PAGE 5: RECOMMENDATIONS</span>
+                </a>
+            </div>
+
+            <div class="nav-right">
+                <a href="body.html" class="btn-nav-action" id="btnBackToBody" title="Return to Whole-Body Anatomy (Page 4)">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <span>BACK TO WHOLE-BODY ANATOMY</span>
+                </a>
+
+                <a href="visualization.html" class="btn-nav-action" id="btnBackTo3D" title="Return to 3D Cardiovascular Visualization (Page 3)">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <span>3D HEART</span>
+                </a>
+
+                <a href="patient.html" class="btn-nav-action btn-nav-profile" id="btnBackToProfile" title="Return to Patient Profile Form (Page 2)">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>PATIENT PROFILE</span>
+                </a>
+
+                <button type="button" class="btn-nav-action btn-print-plan" id="btnPrintPlan" title="Print or Save Health Plan as PDF">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    <span>PRINT PLAN</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ===================================================================
+             2. PAGE HEADING SECTION
+             =================================================================== -->
+        <section class="rec-header-section">
+            <div class="heading-badge-chip">
+                <span class="chip-pulse-dot"></span>
+                <span class="chip-label">AUTOMATED CLINICAL TELEMETRY ANALYSIS</span>
+            </div>
+
+            <div class="heading-title-wrapper">
+                <div class="heading-ecg-icon" aria-hidden="true">
+                    <svg viewBox="0 0 44 24" width="38" height="20" fill="none">
+                        <path d="M1 12h8l4-9 6 18 5-13 4 7 3-3h12" stroke="#00f3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h1 class="rec-main-heading">YOUR PERSONALIZED HEART HEALTH PLAN</h1>
+                <div class="heading-ecg-icon" aria-hidden="true">
+                    <svg viewBox="0 0 44 24" width="38" height="20" fill="none">
+                        <path d="M1 12h8l4-9 6 18 5-13 4 7 3-3h12" stroke="#00f3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <p class="rec-subtitle">
+                Recommendations based on the health information you provided.
+            </p>
+        </section>
+
+        <!-- ===================================================================
+             3. PATIENT TELEMETRY EVALUATION STRIP & TESTING PREVIEW SWITCHER
+             =================================================================== -->
+        <section class="rec-telemetry-banner" id="telemetryBanner">
+            <div class="banner-top-row">
+                <div class="telemetry-source-tag">
+                    <span class="source-indicator" id="telemetrySourceDot"></span>
+                    <span class="source-label" id="telemetrySourceLabel">EVALUATED PATIENT TELEMETRY</span>
+                </div>
+
+                <!-- Interactive Profile Switcher for Live Testing / Verification -->
+                <div class="profile-switcher-wrapper">
+                    <span class="switcher-label">TEST PROFILE:</span>
+                    <div class="switcher-pills" role="group" aria-label="Test Profile Selectors">
+                        <button type="button" class="pill-btn active" id="btnProfileSubmitted" title="Load your actual submitted data from Page 2">
+                            Actual Data
+                        </button>
+                        <button type="button" class="pill-btn" id="btnProfileElevated" title="Test Profile with elevated BP, smoking, and high cholesterol">
+                            Elevated BP &amp; Smoking
+                        </button>
+                        <button type="button" class="pill-btn" id="btnProfileOptimal" title="Test Profile with optimal normal metrics">
+                            Optimal / Normal
+                        </button>
+                        <button type="button" class="pill-btn" id="btnProfileMetabolic" title="Test Profile with prediabetes blood sugar and BMI">
+                            Prediabetes &amp; BMI
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compact Telemetry Metrics Ribbon -->
+            <div class="telemetry-metrics-grid" id="telemetryMetricsGrid">
+                <!-- Dynamically populated by recommendations.js -->
+            </div>
+
+            <!-- Fallback notification if no session data was found initially -->
+            <div class="telemetry-info-notice" id="telemetryNotice" hidden>
+                <div class="notice-icon">i</div>
+                <div class="notice-text">
+                    <strong>Note:</strong> No submitted telemetry from Page 2 was found in session storage. A representative clinical profile is currently displayed for demonstration. To get recommendations based on your personal health numbers, please <a href="patient.html">fill out the Patient Profile form</a>.
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             4. EXECUTIVE FOCUS SUMMARY (TOP ACTION SUMMARY)
+             =================================================================== -->
+        <section class="rec-executive-summary" id="executiveSummarySection">
+            <div class="summary-card-glow"></div>
+            <div class="summary-content">
+                <div class="summary-header">
+                    <div class="summary-badge-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#00f3ff" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 14 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="summary-titles">
+                        <h2 class="summary-main-title">AREAS TO FOCUS ON</h2>
+                        <p class="summary-lead-quote" id="summaryLeadQuote">
+                            "Based on the information you entered, here are the areas you may want to focus on."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="focus-pills-row" id="focusPillsRow">
+                    <!-- Populated dynamically with priority tags -->
+                </div>
+
+                <div class="summary-status-bar" id="summaryStatusBar">
+                    <!-- Dynamic summary count / priority statement -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             5. EMERGENCY & CLINICAL RED-FLAG NOTICE (CONDITIONAL)
+             =================================================================== -->
+        <section class="rec-alert-container" id="emergencyAlertSection" hidden>
+            <div class="emergency-alert-card">
+                <div class="alert-icon-pulse">&excl;</div>
+                <div class="alert-content">
+                    <h3 class="alert-title">IMPORTANT CLINICAL CAUTION</h3>
+                    <p class="alert-body" id="emergencyAlertText">
+                        Your entered clinical notes describe symptoms that may require urgent medical evaluation. If you or the patient are experiencing crushing chest tightness, pressure radiating to the arm, jaw, or back, sudden shortness of breath, unexplained fainting, or sudden numbness, <strong>please contact emergency medical services (911 / 999 / 112) immediately</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             6. DYNAMIC RECOMMENDATION CARDS CONTAINER
+             =================================================================== -->
+        <section class="rec-cards-section" aria-label="Personalized Clinical Recommendations">
+            <div class="section-sub-header">
+                <div class="section-marker">
+                    <span class="marker-dot"></span>
+                    <h2 class="section-title">EVIDENCE-BASED PERSONALIZED RECOMMENDATIONS</h2>
+                </div>
+                <span class="section-count-tag" id="recommendationsCountTag">Loading recommendations...</span>
+            </div>
+
+            <!-- Grid container for dynamically rendered recommendation cards -->
+            <div class="recommendations-stream" id="recommendationsStream">
+                <!-- Dynamically generated cards will be inserted here -->
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             7. INTERACTIVE ACTION PLAN CHECKLIST
+             =================================================================== -->
+        <section class="rec-action-checklist-section" id="actionPlanSection">
+            <div class="checklist-card">
+                <div class="checklist-header">
+                    <div class="checklist-title-group">
+                        <div class="checklist-icon-hex" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#00f3ff" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"></path>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="checklist-title">YOUR PERSONALIZED ACTION CHECKLIST</h2>
+                            <p class="checklist-subtitle">
+                                Track your progress on your highest-yield heart health habits. Check items off as you complete them.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="checklist-actions">
+                        <button type="button" class="btn-checklist-reset" id="btnResetChecklist" title="Reset all checkboxes">
+                            Reset Checklist
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Meter -->
+                <div class="progress-meter-container">
+                    <div class="progress-label-row">
+                        <span class="progress-label">ACTION PLAN PROGRESS</span>
+                        <span class="progress-score" id="checklistProgressText">0 of 6 actions completed &bull; 0%</span>
+                    </div>
+                    <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="checklistProgressBarTrack">
+                        <div class="progress-fill" id="checklistProgressFill" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Checkbox Items List -->
+                <div class="checklist-items-grid" id="checklistItemsGrid">
+                    <!-- Populated dynamically based on user recommendations -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             8. QUESTIONS TO ASK YOUR HEALTHCARE PROFESSIONAL
+             =================================================================== -->
+        <section class="rec-doctor-questions-section" id="doctorQuestionsSection">
+            <div class="questions-card">
+                <div class="questions-card-header">
+                    <div class="questions-icon-wrap" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#00f3ff" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                    <div class="questions-titles">
+                        <h2 class="questions-main-heading">QUESTIONS TO ASK YOUR HEALTHCARE PROFESSIONAL</h2>
+                        <p class="questions-subtitle">
+                            Tailored conversation points based on your specific submitted measurements to bring to your next clinical appointment.
+                        </p>
+                    </div>
+
+                    <button type="button" class="btn-copy-questions" id="btnCopyQuestions" title="Copy all questions to clipboard">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span id="btnCopyQuestionsText">COPY QUESTIONS</span>
+                    </button>
+                </div>
+
+                <div class="questions-list-wrapper">
+                    <ol class="questions-list" id="questionsList">
+                        <!-- Populated dynamically based on patient profile flags -->
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             9. MANDATORY MEDICAL ACCURACY & PROTOTYPE DISCLAIMER
+             =================================================================== -->
+        <section class="rec-prototype-disclaimer-section" role="note">
+            <div class="disclaimer-inner-card">
+                <div class="disclaimer-badge">
+                    <span class="disclaimer-badge-text">EDUCATIONAL PROTOTYPE</span>
+                </div>
+                <div class="disclaimer-content">
+                    <h3 class="disclaimer-heading">MANDATORY MEDICAL ACCURACY NOTICE</h3>
+                    <p class="disclaimer-text">
+                        <strong>TSVP — The Smart Vascular Predictor</strong> is an educational technology demonstration and research prototype developed for educational and hackathon exploration. 
+                        <strong>This system is not a certified medical device and does not provide medical diagnoses, treatment prescriptions, or cardiovascular risk predictions.</strong>
+                    </p>
+                    <ul class="disclaimer-rules-list">
+                        <li><strong>No Diagnosis:</strong> This report cannot diagnose hypertension, coronary artery disease, atherosclerosis, or diabetes mellitus from self-reported survey values.</li>
+                        <li><strong>Prescription Integrity:</strong> <em>Never alter, reduce, or stop any prescribed medications</em> (including blood pressure, cholesterol, or blood glucose medicines) without direct supervision and authorization from your prescribing physician.</li>
+                        <li><strong>Emergency Guidance:</strong> If you or anyone around you experiences potential symptoms of acute myocardial infarction, severe angina, sudden dyspnea, or stroke (facial drooping, arm weakness, speech difficulty), call <strong>911 / 999 / 112</strong> immediately.</li>
+                        <li><strong>Clinical Interpretation:</strong> All physiological measurements must be evaluated within the context of a comprehensive medical examination by a licensed medical practitioner.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             10. BOTTOM NAVIGATION ACTION BAR
+             =================================================================== -->
+        <footer class="rec-footer-bar">
+            <div class="footer-left-nav" style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                <a href="body.html" class="btn-footer-link">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <span>BACK TO WHOLE-BODY ANATOMY</span>
+                </a>
+                <a href="visualization.html" class="btn-footer-link" style="opacity: 0.85;">
+                    <span>3D HEART</span>
+                </a>
+            </div>
+
+            <div class="footer-center-tag">
+                <span class="footer-dot-pulse"></span>
+                <span>TSVP VASCULAR ENGINE &bull; PERSONALIZED RECOMMENDATIONS MODULE</span>
+            </div>
+
+            <div class="footer-nav-group">
+                <a href="patient.html" class="btn-footer-link btn-footer-accent">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>BACK TO PATIENT PROFILE</span>
+                </a>
+
+                <a href="index.html" class="btn-footer-link">
+                    <span>SYSTEM CORE</span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </footer>
+
+    </div> <!-- End .rec-page-container -->
+
+    <!-- Toast Notification Element -->
+    <div class="rec-toast" id="recToast" role="status" aria-live="polite" hidden></div>
+
+    <!-- Scripts: Script for Canvas Particles + Recommendations Controller Logic -->
+    <script src="script.js"></script>
+    <script src="recommendations.js"></script>
+</body>
+</html>
