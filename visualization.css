@@ -203,7 +203,7 @@
    -------------------------------------------------------------------------- */
 .vis-stage-layout {
     display: grid;
-    grid-template-columns: 1.55fr 1fr;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
     gap: 1.75rem;
     margin-bottom: 2.5rem;
     align-items: start;
@@ -1105,6 +1105,9 @@
 /* --------------------------------------------------------------------------
    9. Responsive Adaptations
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   9. Responsive Adaptations
+   -------------------------------------------------------------------------- */
 @media (max-width: 1100px) {
     .vis-stage-layout {
         grid-template-columns: 1fr;
@@ -1116,20 +1119,164 @@
 
 @media (max-width: 768px) {
     .vis-page-container {
-        padding: 1rem 1rem 3rem 1rem;
+        padding: 1rem 0.85rem 3rem 0.85rem;
+    }
+    .vis-top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.85rem;
+    }
+    .vis-top-bar .nav-left {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+    .vis-top-bar .nav-right {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem !important;
+    }
+    .btn-back-profile,
+    .btn-nav-plan {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+        padding: 0.65rem 0.85rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
     }
     .canvas-3d-wrapper {
-        height: 380px;
+        height: 360px;
     }
     .heart-controls-panel {
         grid-template-columns: 1fr;
+        padding: 1rem;
     }
     .vis-footer-bar {
         flex-direction: column;
         align-items: stretch;
+        gap: 0.75rem;
     }
     .btn-footer-back,
-    .btn-footer-home {
+    .btn-footer-home,
+    .btn-footer-plan {
+        width: 100%;
         justify-content: center;
+    }
+    .footer-status-tag {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .vis-page-container {
+        padding: 0.85rem 0.65rem 2.5rem 0.65rem;
+    }
+    .heading-ecg-icon {
+        display: none;
+    }
+    .vis-main-heading {
+        font-size: clamp(1.22rem, 5.5vw, 1.65rem);
+        letter-spacing: 0.05em;
+    }
+    .vis-sub-heading {
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+    }
+    .patient-telemetry-banner {
+        padding: 0.75rem 0.85rem;
+    }
+    .telemetry-pills-row {
+        gap: 0.35rem;
+    }
+    .telemetry-pill {
+        font-size: 0.68rem;
+        padding: 0.2rem 0.45rem;
+    }
+    .canvas-3d-wrapper {
+        height: 310px;
+    }
+    .hud-view-badge {
+        top: 10px;
+        left: 10px;
+        font-size: 0.58rem;
+        padding: 0.2rem 0.55rem;
+        letter-spacing: 0.08em;
+    }
+    .hud-interaction-hint {
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.54rem;
+        padding: 0.18rem 0.45rem;
+        letter-spacing: 0.06em;
+    }
+    .hud-reticle {
+        width: 12px;
+        height: 12px;
+    }
+    .hud-reticle.top-left {
+        top: 8px;
+        left: 8px;
+    }
+    .hud-reticle.top-right {
+        top: 8px;
+        right: 8px;
+    }
+    .hud-reticle.bottom-left {
+        bottom: 8px;
+        left: 8px;
+    }
+    .hud-reticle.bottom-right {
+        bottom: 8px;
+        right: 8px;
+    }
+    .capillary-inset-modal {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        max-width: calc(100% - 16px);
+    }
+    .control-toggle-pills {
+        gap: 2px;
+        padding: 2px;
+    }
+    .view-pill {
+        font-size: 0.6rem;
+        padding: 0.45rem 0.35rem;
+        letter-spacing: 0.04em;
+    }
+    .heart-controls-panel {
+        padding: 0.85rem 0.75rem;
+        gap: 0.85rem;
+    }
+    .btn-ctrl {
+        padding: 0.5rem 0.65rem;
+        font-size: 0.68rem;
+    }
+    .side-card {
+        padding: 1rem 0.85rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .vis-page-container {
+        padding: 0.65rem 0.5rem 2rem 0.5rem;
+    }
+    .canvas-3d-wrapper {
+        height: 270px;
+    }
+    .control-toggle-pills {
+        flex-direction: column;
+    }
+    .view-pill {
+        font-size: 0.58rem;
+        padding: 0.4rem 0.3rem;
+        letter-spacing: 0.02em;
+    }
+    .vis-main-heading {
+        font-size: 1.15rem;
+    }
+    .structure-info-card {
+        padding: 0.85rem 0.75rem;
     }
 }

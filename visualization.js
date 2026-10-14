@@ -538,9 +538,11 @@
         scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x020614, 0.04);
 
-        // Camera
-        camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-        camera.position.set(0, 0.3, 4.8);
+        // Camera with mobile portrait aspect adaptation
+        const aspect = width / (height || 1);
+        camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100);
+        const initialZ = aspect < 1.15 ? 4.8 * Math.min(1.4, 1.15 / Math.max(aspect, 0.65)) : 4.8;
+        camera.position.set(0, 0.3, initialZ);
 
         // Renderer
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -861,7 +863,21 @@
         const width = container.clientWidth;
         const height = container.clientHeight;
 
-        camera.aspect = width / height;
+        const aspect = width / (height || 1);
+        camera.aspect = aspect;
+
+        // Adapt camera distance for portrait mobile displays
+        if (aspect < 1.15) {
+            const distScale = Math.min(1.4, 1.15 / Math.max(aspect, 0.65));
+            if (controls) {
+                controls.minDistance = 2.0;
+                controls.maxDistance = 10.0;
+            }
+            camera.position.z = 4.8 * distScale;
+        } else {
+            camera.position.z = 4.8;
+        }
+
         camera.updateProjectionMatrix();
         renderer.setSize(width, height);
     }
@@ -980,11 +996,16 @@
         const startPos = camera.position.clone();
         const startTarget = controls.target.clone();
 
+        const container = document.getElementById('threeHeartCanvas');
+        const aspect = container ? (container.clientWidth / (container.clientHeight || 1)) : 1.2;
+        const zoomScale = aspect < 1.15 ? Math.min(1.4, 1.15 / Math.max(aspect, 0.65)) : 1.0;
+        const effectiveZoom = targetZoom * zoomScale;
+
         const endTarget = new THREE.Vector3(targetPos[0] * 0.4, targetPos[1] * 0.4, targetPos[2] * 0.4);
         const endPos = new THREE.Vector3(
             targetPos[0] * 0.2,
             targetPos[1] * 0.2 + 0.3,
-            targetZoom
+            effectiveZoom
         );
 
         let progress = 0;

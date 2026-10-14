@@ -1594,7 +1594,14 @@
         if (!canvasContainer || !camera || !renderer) return;
         const width = canvasContainer.clientWidth || 800;
         const height = canvasContainer.clientHeight || 560;
-        camera.aspect = width / height;
+        const aspect = width / (height || 1);
+        camera.aspect = aspect;
+        if (aspect < 1.15) {
+            if (controls) {
+                controls.minDistance = 2.5;
+                controls.maxDistance = 14.0;
+            }
+        }
         camera.updateProjectionMatrix();
         renderer.setSize(width, height);
     }
