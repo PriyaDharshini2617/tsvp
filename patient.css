@@ -6,12 +6,19 @@
 /* --------------------------------------------------------------------------
    1. Page Layout & Base Container
    -------------------------------------------------------------------------- */
+html {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .patient-body {
     min-height: 100vh;
+    max-width: 100%;
     display: block;
     background: radial-gradient(circle at 50% 20%, #051336 0%, #020614 45%, #01040a 100%);
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
 }
 
 .patient-page-container {
@@ -1029,6 +1036,8 @@
         0 0 24px rgba(0, 243, 255, 0.5),
         inset 0 0 15px rgba(0, 243, 255, 0.2);
     overflow: hidden;
+    contain: paint;
+    isolation: isolate;
     transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -1048,17 +1057,24 @@
 .btn-glow-shimmer {
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 60%;
+    left: 0;
+    width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transform: skewX(-20deg);
+    background: linear-gradient(
+        105deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.28) 50%,
+        transparent 80%
+    );
+    background-size: 200% 100%;
+    background-position: 200% 0;
     animation: shimmerSlide 3.5s infinite;
+    pointer-events: none;
 }
 
 @keyframes shimmerSlide {
-    0% { left: -100%; }
-    40%, 100% { left: 200%; }
+    0% { background-position: 200% 0; }
+    50%, 100% { background-position: -200% 0; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1367,6 +1383,15 @@
     .ai-assistant-card {
         padding: 1.1rem 0.85rem;
         border-radius: 12px;
+        overflow: hidden;
+    }
+    .ai-card-header {
+        padding: 0;
+        gap: 0.85rem;
+    }
+    .ai-card-titles {
+        min-width: 0 !important;
+        width: 100%;
     }
     .chat-bubble {
         max-width: 95%;
@@ -1387,6 +1412,9 @@
         padding: 0.65rem 0.95rem;
         font-size: 0.72rem;
         letter-spacing: 0.08em;
+        white-space: normal;
+        text-align: center;
+        max-width: 100%;
     }
 }
 

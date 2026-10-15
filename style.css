@@ -1020,6 +1020,17 @@ body {
 }
 
 @media (max-width: 768px) {
+    html {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    body {
+        max-width: 100%;
+        min-height: 100vh;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
     .hud-corner {
         display: none; /* Keep clean and uncluttered on mobile */
     }
@@ -1027,6 +1038,8 @@ body {
         padding: 1.75rem 1rem;
         min-height: 100vh;
         height: auto;
+        max-width: 100%;
+        overflow: hidden;
     }
     .main-title {
         font-size: clamp(2.6rem, 8.5vw, 4.2rem);
@@ -1037,13 +1050,34 @@ body {
         padding-left: clamp(0.18em, 0.5vw, 0.3em);
     }
     .heart-chamber {
-        height: 340px;
-        max-width: 340px;
+        height: 330px;
+        max-width: 330px;
         margin: 1rem auto;
+        perspective: none;
+        overflow: hidden;
+        contain: paint;
+    }
+    .volumetric-rays {
+        width: 310px;
+        height: 310px;
+        max-width: 88vw;
+        max-height: 88vw;
+    }
+    .radar-sweep {
+        width: 290px;
+        height: 290px;
+        max-width: 82vw;
+        max-height: 82vw;
+    }
+    .heart-aura {
+        width: 270px;
+        height: 270px;
+        max-width: 76vw;
+        max-height: 76vw;
     }
     .hud-rings-container {
-        width: 320px;
-        height: 320px;
+        width: 310px;
+        height: 310px;
     }
     .heart-wrapper {
         width: 215px;
@@ -1078,25 +1112,45 @@ body {
         margin-top: 0.5rem;
     }
     .heart-chamber {
-        height: 290px;
-        max-width: 290px;
+        height: 280px;
+        max-width: 280px;
         margin: 0.75rem auto;
+        perspective: none;
         overflow: hidden;
+        contain: paint;
+    }
+    .volumetric-rays {
+        width: 260px;
+        height: 260px;
+        max-width: 86vw;
+        max-height: 86vw;
+    }
+    .radar-sweep {
+        width: 240px;
+        height: 240px;
+        max-width: 80vw;
+        max-height: 80vw;
+    }
+    .heart-aura {
+        width: 220px;
+        height: 220px;
+        max-width: 74vw;
+        max-height: 74vw;
     }
     .hud-rings-container {
-        width: 275px;
-        height: 275px;
+        width: 260px;
+        height: 260px;
     }
     .heart-wrapper {
-        width: 180px;
-        height: 180px;
+        width: 175px;
+        height: 175px;
     }
     .bottom-light-beam {
-        width: 240px;
-        height: 160px;
+        width: 220px;
+        height: 150px;
     }
     .cardio-wave-container {
-        width: 190px;
+        width: 180px;
         bottom: -8px;
     }
     .tagline-line {
@@ -1132,25 +1186,45 @@ body {
         padding-left: 0.1em;
     }
     .heart-chamber {
-        height: 245px;
-        max-width: 245px;
+        height: 240px;
+        max-width: 240px;
         margin: 0.5rem auto;
+        perspective: none;
         overflow: hidden;
+        contain: paint;
+    }
+    .volumetric-rays {
+        width: 215px;
+        height: 215px;
+        max-width: 84vw;
+        max-height: 84vw;
+    }
+    .radar-sweep {
+        width: 200px;
+        height: 200px;
+        max-width: 78vw;
+        max-height: 78vw;
+    }
+    .heart-aura {
+        width: 175px;
+        height: 175px;
+        max-width: 70vw;
+        max-height: 70vw;
     }
     .hud-rings-container {
-        width: 230px;
-        height: 230px;
+        width: 225px;
+        height: 225px;
     }
     .heart-wrapper {
         width: 145px;
         height: 145px;
     }
     .bottom-light-beam {
-        width: 190px;
-        height: 130px;
+        width: 180px;
+        height: 120px;
     }
     .cardio-wave-container {
-        width: 160px;
+        width: 150px;
         bottom: -6px;
     }
     .tagline-line {

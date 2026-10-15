@@ -6,14 +6,21 @@
 /* --------------------------------------------------------------------------
    1. Base Page Container & Theme
    -------------------------------------------------------------------------- */
+html {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .rec-body {
     min-height: 100vh;
+    max-width: 100%;
     display: block;
     background: radial-gradient(circle at 50% 12%, #05143a 0%, #020614 45%, #01040a 100%);
     color: #e0faff;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
 }
 
 .rec-page-container {
@@ -190,6 +197,8 @@
     box-shadow: 0 0 30px rgba(0, 243, 255, 0.08);
     margin-bottom: 2rem;
     transition: all 0.3s ease;
+    overflow: hidden;
+    contain: paint;
 }
 
 .banner-top-row {
@@ -1480,20 +1489,40 @@
         max-width: 100%;
         min-width: 0;
         overflow: hidden;
+        contain: paint;
     }
 
     .switcher-pills {
         width: 100%;
         max-width: 100%;
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        -webkit-overflow-scrolling: touch;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.35rem;
         padding: 4px;
         box-sizing: border-box;
     }
 
     .pill-btn {
-        flex-shrink: 0;
+        width: 100%;
+        text-align: center;
+        white-space: normal;
+        padding: 0.45rem 0.35rem;
+        font-size: 0.65rem;
+        box-sizing: border-box;
+    }
+
+    .rec-executive-summary {
+        overflow: hidden;
+        contain: paint;
+    }
+
+    .summary-card-glow {
+        top: 0;
+        right: 0;
+        width: 130px;
+        height: 130px;
+        transform: none;
+        background: radial-gradient(circle at 100% 0%, rgba(0, 243, 255, 0.18) 0%, transparent 70%);
     }
 
     .rec-footer-bar {
