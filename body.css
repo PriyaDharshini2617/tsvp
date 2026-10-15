@@ -290,7 +290,9 @@ body.vis-body {
 
 @media (max-width: 992px) {
     .body-stage-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -801,6 +803,10 @@ body.vis-body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .side-card {
@@ -811,6 +817,12 @@ body.vis-body {
     backdrop-filter: blur(14px);
     box-shadow: 0 0 25px rgba(0, 243, 255, 0.06);
     transition: border-color 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .side-card:hover {
@@ -825,6 +837,9 @@ body.vis-body {
     margin-bottom: 0.85rem;
     flex-wrap: wrap;
     gap: 0.65rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .organ-tag-wrap {
@@ -882,6 +897,9 @@ body.vis-body {
     margin-bottom: 1.15rem;
     padding-bottom: 0.85rem;
     border-bottom: 1px solid rgba(0, 243, 255, 0.16);
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .organ-icon-circle {
@@ -914,6 +932,10 @@ body.vis-body {
     color: #ffffff;
     margin: 0;
     text-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 /* 4 Sections Stack */
@@ -929,6 +951,12 @@ body.vis-body {
     border-radius: 8px;
     padding: 0.85rem 1rem;
     transition: border-color 0.2s ease;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .info-block-box:hover {
@@ -940,6 +968,9 @@ body.vis-body {
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.35rem;
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .block-icon-num {
@@ -1101,6 +1132,12 @@ body.vis-body {
     padding: 0.65rem 0.85rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .body-factor-card:hover {
@@ -1121,7 +1158,12 @@ body.vis-body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
     margin-bottom: 0.25rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .factor-name-tag {
@@ -1131,6 +1173,9 @@ body.vis-body {
     letter-spacing: 0.08em;
     color: #ffffff;
     text-transform: uppercase;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .factor-value-text {
@@ -1138,6 +1183,9 @@ body.vis-body {
     font-size: 0.75rem;
     font-weight: 700;
     color: var(--cyan-bright);
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .factor-organs-note {
@@ -1334,19 +1382,44 @@ body.vis-body {
         font-size: 0.68rem;
     }
     .side-card {
-        padding: 1rem 0.85rem;
+        padding: 0.95rem 0.75rem;
+    }
+    .side-card-title {
+        font-size: clamp(0.72rem, 3.5vw, 0.82rem);
+        letter-spacing: 0.06em;
+    }
+    .organ-name-heading {
+        font-size: clamp(0.95rem, 4vw, 1.1rem);
+        letter-spacing: 0.05em;
+    }
+    .factor-name-tag {
+        font-size: clamp(0.66rem, 2.5vw, 0.72rem);
+        letter-spacing: 0.04em;
     }
 }
 
 @media (max-width: 360px) {
     .body-page-container {
-        padding: 0.65rem 0.5rem 2rem 0.5rem;
+        padding: 0.65rem 0.45rem 2rem 0.45rem;
     }
     .body-canvas-wrapper {
         height: 290px;
     }
     .body-main-heading {
         font-size: 1.1rem;
+    }
+    .side-card {
+        padding: 0.85rem 0.65rem;
+    }
+    .side-card-title {
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+    }
+    .organ-name-heading {
+        font-size: 0.92rem;
+    }
+    .factor-name-tag {
+        font-size: 0.64rem;
     }
     .body-controls-panel {
         padding: 0.75rem 0.55rem;

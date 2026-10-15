@@ -409,6 +409,12 @@ html {
     backdrop-filter: blur(16px);
     box-shadow: 0 0 35px rgba(0, 243, 255, 0.1);
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .summary-card-glow {
@@ -424,6 +430,8 @@ html {
 .summary-content {
     position: relative;
     z-index: 2;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .summary-header {
@@ -431,6 +439,9 @@ html {
     align-items: flex-start;
     gap: 1rem;
     margin-bottom: 1.15rem;
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .summary-badge-icon {
@@ -454,6 +465,10 @@ html {
     color: #ffffff;
     margin: 0 0 0.35rem 0;
     text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .summary-lead-quote {
@@ -635,6 +650,12 @@ html {
     box-shadow: 0 0 25px rgba(0, 243, 255, 0.05);
     transition: all 0.25s ease;
     animation: fadeIn 0.4s ease;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .rec-card:hover {
@@ -664,12 +685,18 @@ html {
     border-bottom: 1px solid rgba(0, 243, 255, 0.15);
     flex-wrap: wrap;
     gap: 0.75rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .card-title-group {
     display: flex;
     align-items: center;
     gap: 0.85rem;
+    min-width: 0;
+    max-width: 100%;
+    flex: 1;
 }
 
 .card-category-icon {
@@ -692,6 +719,9 @@ html {
     letter-spacing: 0.1em;
     color: #ffffff;
     margin: 0 0 0.25rem 0;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
 }
 
 .card-sub-category {
@@ -711,7 +741,10 @@ html {
     padding: 0.25rem 0.75rem;
     border-radius: 6px;
     text-transform: uppercase;
-    white-space: nowrap;
+    white-space: normal;
+    text-align: right;
+    max-width: 100%;
+    line-height: 1.25;
 }
 
 .badge-priority-high {
@@ -742,7 +775,9 @@ html {
 
 @media (max-width: 900px) {
     .rec-card-quadrant {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -755,6 +790,12 @@ html {
     flex-direction: column;
     gap: 0.45rem;
     transition: all 0.2s ease;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .quadrant-box:hover {
@@ -913,6 +954,12 @@ html {
     padding: 2rem 2.25rem;
     backdrop-filter: blur(16px);
     box-shadow: 0 0 35px rgba(0, 243, 255, 0.08);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .checklist-header {
@@ -922,6 +969,9 @@ html {
     margin-bottom: 1.75rem;
     flex-wrap: wrap;
     gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .checklist-title-group {
@@ -929,6 +979,8 @@ html {
     align-items: flex-start;
     gap: 1rem;
     max-width: 800px;
+    min-width: 0;
+    flex: 1;
 }
 
 .checklist-icon-hex {
@@ -952,6 +1004,10 @@ html {
     color: #ffffff;
     margin: 0 0 0.35rem 0;
     text-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .checklist-subtitle {
@@ -1104,6 +1160,12 @@ html {
     padding: 2rem 2.25rem;
     backdrop-filter: blur(16px);
     box-shadow: 0 0 35px rgba(0, 243, 255, 0.08);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .questions-card-header {
@@ -1112,6 +1174,9 @@ html {
     gap: 1rem;
     margin-bottom: 1.75rem;
     flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .questions-icon-wrap {
@@ -1129,7 +1194,8 @@ html {
 
 .questions-titles {
     flex: 1;
-    min-width: 260px;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .questions-main-heading {
@@ -1140,6 +1206,10 @@ html {
     color: #ffffff;
     margin: 0 0 0.35rem 0;
     text-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .questions-subtitle {
@@ -1591,6 +1661,26 @@ html {
     .disclaimer-inner-card {
         padding: 1.15rem 0.85rem;
         border-radius: 12px;
+    }
+
+    .rec-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.65rem;
+    }
+
+    .card-title-group {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .card-priority-badge {
+        align-self: flex-start;
+    }
+
+    .card-heading-title {
+        font-size: clamp(0.92rem, 4.2vw, 1.05rem);
+        letter-spacing: 0.06em;
     }
 
     .summary-lead-quote {

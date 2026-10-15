@@ -739,6 +739,10 @@ html {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .side-card {
@@ -749,6 +753,12 @@ html {
     backdrop-filter: blur(14px);
     box-shadow: 0 0 25px rgba(0, 243, 255, 0.06);
     transition: border-color 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .side-card:hover {
@@ -757,11 +767,14 @@ html {
 
 .side-card-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.65rem;
     margin-bottom: 0.85rem;
     padding-bottom: 0.65rem;
     border-bottom: 1px solid rgba(0, 243, 255, 0.15);
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
 }
 
 .card-icon-hex {
@@ -776,16 +789,24 @@ html {
     color: var(--cyan-bright);
     font-size: 0.75rem;
     box-shadow: 0 0 6px rgba(0, 243, 255, 0.3);
+    flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .side-card-title {
     font-family: var(--font-heading);
     font-size: 0.88rem;
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     color: var(--cyan-pale);
     text-transform: uppercase;
     text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+    min-width: 0;
+    max-width: 100%;
+    flex: 1;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    line-height: 1.35;
 }
 
 .card-intro {
@@ -850,9 +871,14 @@ html {
     gap: 0.75rem;
     max-height: 380px;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 0.25rem;
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 243, 255, 0.3) transparent;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .factor-item-card {
@@ -862,6 +888,12 @@ html {
     border-radius: 8px;
     padding: 0.75rem 0.95rem;
     transition: all 0.2s ease;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .factor-item-card.status-amber {
@@ -881,7 +913,12 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
     margin-bottom: 0.35rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .factor-name {
@@ -891,6 +928,9 @@ html {
     letter-spacing: 0.08em;
     color: var(--cyan-ice);
     text-transform: uppercase;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .factor-badge {
@@ -900,6 +940,10 @@ html {
     padding: 0.15rem 0.45rem;
     border-radius: 4px;
     text-transform: uppercase;
+    white-space: normal;
+    text-align: right;
+    max-width: 100%;
+    line-height: 1.25;
 }
 
 .badge-cyan {
@@ -926,6 +970,10 @@ html {
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 0.35rem;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .factor-explanation {
@@ -933,6 +981,10 @@ html {
     line-height: 1.45;
     color: rgba(224, 250, 255, 0.8);
     margin-bottom: 0.35rem;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .factor-structure-link {
@@ -943,6 +995,10 @@ html {
     letter-spacing: 0.08em;
     color: var(--cyan-bright);
     text-transform: uppercase;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .factor-schematic-pill {
@@ -952,6 +1008,10 @@ html {
     letter-spacing: 0.06em;
     color: rgba(165, 243, 252, 0.55);
     font-style: italic;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 /* Explanation Panel Content */
@@ -960,6 +1020,10 @@ html {
     flex-direction: column;
     gap: 0.85rem;
     margin-bottom: 1.15rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .exp-block {
@@ -967,6 +1031,12 @@ html {
     border: 1px solid rgba(0, 243, 255, 0.15);
     border-radius: 8px;
     padding: 0.75rem 0.95rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .exp-subhead {
@@ -977,12 +1047,21 @@ html {
     color: var(--cyan-ice);
     margin-bottom: 0.35rem;
     text-transform: uppercase;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .exp-text {
     font-size: 0.78rem;
     line-height: 1.5;
     color: rgba(224, 250, 255, 0.82);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
 }
 
 .exp-text.text-neutral {
@@ -1117,7 +1196,9 @@ html {
    -------------------------------------------------------------------------- */
 @media (max-width: 1100px) {
     .vis-stage-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        max-width: 100%;
     }
     .heart-controls-panel {
         grid-template-columns: repeat(2, 1fr);
@@ -1261,13 +1342,46 @@ html {
         font-size: 0.68rem;
     }
     .side-card {
-        padding: 1rem 0.85rem;
+        padding: 0.95rem 0.75rem;
+    }
+    .side-card-title {
+        font-size: clamp(0.74rem, 3.8vw, 0.84rem);
+        letter-spacing: 0.05em;
+    }
+    .factor-name {
+        font-size: clamp(0.68rem, 2.5vw, 0.74rem);
+        letter-spacing: 0.04em;
+    }
+    .factor-badge {
+        font-size: 0.62rem;
+        padding: 0.12rem 0.35rem;
+    }
+    .exp-subhead {
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+    }
+    .exp-text {
+        font-size: 0.74rem;
+        line-height: 1.45;
     }
 }
 
 @media (max-width: 360px) {
     .vis-page-container {
-        padding: 0.65rem 0.5rem 2rem 0.5rem;
+        padding: 0.65rem 0.45rem 2rem 0.45rem;
+    }
+    .side-card {
+        padding: 0.85rem 0.65rem;
+    }
+    .side-card-title {
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+    }
+    .factor-name {
+        font-size: 0.66rem;
+    }
+    .factor-badge {
+        font-size: 0.58rem;
     }
     .canvas-3d-wrapper {
         height: 270px;
